@@ -1,9 +1,9 @@
 <template>
     <ul class="task-list">
       <li class="task-list-item" v-for="(item, index) in list" :key="index">
-        <van-tag v-if="index === 1" color="#ffe1e1" text-color="#ad0000">当前等级</van-tag>
+        <van-tag v-if="index === 1" color="#ffe1e1" text-color="#ad0000">{{$t('hall.level')}}</van-tag>
         <p>{{item.name}}</p>
-        <div>每日任务数：{{item.day_limit_task_num}}</div>
+        <div>{{$t('hall.taskName')}}：{{item.day_limit_task_num}}</div>
       </li>
     </ul>
 </template>

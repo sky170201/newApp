@@ -36,6 +36,11 @@ const closeDropdown = (a) => {
 
 <style scoped lang='less'>
 .van-dropdown-menu {
+  :deep(.van-dropdown-menu__bar) {
+    .van-ellipsis {
+      font-size: 26px!important;
+    }
+  }
   :deep(.van-dropdown-item) {
     .van-popup {
       .van-cell {

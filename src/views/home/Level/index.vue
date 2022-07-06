@@ -2,16 +2,16 @@
     <div class="vip">
         <div class="current">
             <div class="current-box">
-                <p>当前等级：<span>{{vipInfo.vip}}</span></p>
-                <p>每日任务数：<span>{{vipInfo.num}}</span></p>
+                <p>{{$t('hall.level')}}：<span>{{vipInfo.vip}}</span></p>
+                <p>{{$t('hall.taskName')}}：<span>{{vipInfo.num}}</span></p>
             </div>
         </div>
         <ul class="vip-box">
             <li class="vip-box-item" v-for="(item, index) in vipInfo.list" :key="index">
                 <p class="main">{{item.name}} <span class="light-text">{{item.money}}EUR</span></p>
                 <div class="content">
-                    <p>每日任务数：<span class="light-text">{{item.num}}</span></p>
-                    <div class="btn">立即加入</div>
+                    <p>{{$t('hall.taskName')}}：<span class="light-text">{{item.num}}</span></p>
+                    <div class="btn">{{$t('level.btnName')}}</div>
                 </div>
             </li>
         </ul>
@@ -68,7 +68,7 @@ const vipInfo = reactive({
 <style scoped lang='less'>
 .vip {
     .current {
-        padding: 30px 40px;
+        padding: 30px;
         &-box {
             border-radius: 8px;
             background: url(~@/assets/img/vip_new_bg.png) no-repeat 50px,linear-gradient(60deg,#8ab2f3,#115dd1);
@@ -78,7 +78,7 @@ const vipInfo = reactive({
             flex-direction: column;
             align-items: center;
             padding: 40px;
-            font-size: 30px;
+            font-size: 28px;
             color: #fff;
             p:first-of-type {
                 margin-bottom: 20px;
@@ -87,13 +87,13 @@ const vipInfo = reactive({
                 span {
                     color: #efb322;
                     font-weight: 700;
-                    font-size: 38px;
+                    font-size: 36px;
                 }
             }
         }
     }
     .vip-box {
-        padding: 30px 40px;
+        padding: 30px;
         &-item {
             border-radius: 8px;
             background: url(~@/assets/img/vip_new_bg.png) no-repeat 50px,linear-gradient(60deg,#ccd7e9,#7085a5);
@@ -101,7 +101,7 @@ const vipInfo = reactive({
             box-shadow: 13px 13px 27px 0 #7085a5;
             margin-bottom: 30px;
             padding: 50px 40px;
-            font-size: 30px;
+            font-size: 28px;
             color: #fff;
             .main {
                 margin-bottom: 20px;
@@ -110,14 +110,14 @@ const vipInfo = reactive({
             .light-text {
                 color: #efb322;
                 font-weight: 700;
-                font-size: 38px;
+                font-size: 36px;
                 margin-left: 5px;
             }
             .content {
                 display: flex;
                 justify-content: space-between;
                 .btn {
-                    font-size: 30px;
+                    font-size: 28px;
                 }
             }
         }

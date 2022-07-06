@@ -3,7 +3,7 @@
         <template #left>
             <van-icon name="chat-o" @click="openChat" size="24"/>
         </template>
-        <template #title>我的上级:100000068</template>
+        <template #title>{{$t('my.super')}}:{{userInfo.pid}}</template>
         <template #right>
             <SelectLanguage/>
         </template>
@@ -14,45 +14,45 @@
                 <img :src="userInfo.avatar">
                 <div>
                     <p>ID: {{userInfo.uid}}</p>
-                    <p>账号: {{userInfo.username}} <span>{{userInfo.vip}}</span></p>
-                    <p>邀请码: {{userInfo.code}}</p>
+                    <p>{{$t('my.account')}}: {{userInfo.username}} <span>{{userInfo.vip}}</span></p>
+                    <p>{{$t('my.iCode')}}: {{userInfo.code}}</p>
                 </div>
             </div>
             <div @click="logout" class="account-right">
                 <img src="~@/assets/img/exit.png">
-                <p>退出登录</p>
+                <p>{{$t('my.exit')}}</p>
             </div>
         </div>
         <div class="wallet">
             <div class="box">
                 <div class="up">
                     <div>
-                        <p>余额：<span>{{userInfo.money}}</span> EUR</p>
-                        <p>USDT: <span>{{userInfo.usdt}}</span></p>
+                        <p>{{$t('my.balance')}}：<span>{{userInfo.money}}</span> EUR</p>
+                        <p>{{$t('my.usdt')}}: <span>{{userInfo.usdt}}</span></p>
                     </div>
-                    <van-button type="primary">我的钱包</van-button>
+                    <van-button type="primary">{{$t('my.wallet')}}</van-button>
                 </div>
-                <van-steps :active="userInfo.sy_shengyu">
-                    <van-step>封号</van-step>
-                    <van-step>限制</van-step>
-                    <van-step>良好</van-step>
-                    <van-step>优秀</van-step>
+                <van-steps :active="userInfo.uid">
+                    <van-step>{{$t('my.credit')}}</van-step>
+                    <van-step>{{$t('my.restriction')}}</van-step>
+                    <van-step>{{$t('my.good')}}</van-step>
+                    <van-step>{{$t('my.excellent')}}</van-step>
                 </van-steps>
             </div>
         </div>
         <van-grid :gutter="3" :column-num="3">
-            <van-grid-item v-for="value in 9" :key="value" text="文字">
+            <van-grid-item v-for="(item, index) in accountList" :key="index" :text="item.name">
                 <template #icon>
-                    123
+                    {{item.value}}
                 </template>
             </van-grid-item>
         </van-grid>
         <div class="line"></div>
         <div class="line"></div>
         <van-grid :gutter="3" :column-num="3">
-            <van-grid-item v-for="value in 9" :key="value" text="文字">
+            <van-grid-item v-for="(item, index) in appList" :key="index" :text="item.name">
                 <template #icon>
-                    123
+                    <img :src="item.icon">
                 </template>
             </van-grid-item>
         </van-grid>
@@ -63,6 +63,17 @@
 import { reactive } from 'vue'
 import NavBar from '@/components/NavBar'
 import router from '@/router'
+import i18n from '@/language/i18n'
+
+import info from '@/assets/img/info.png'
+import download from '@/assets/img/cloud-download.png'
+import excel from '@/assets/img/excel.png'
+import wallet from '@/assets/img/wallet.png'
+import gift from '@/assets/img/gift.png'
+import team from '@/assets/img/tubiao-bingtu.png'
+import help from '@/assets/img/help.png'
+import telegram from '@/assets/img/telegram.png'
+import flower from '@/assets/img/flower.png'
 
 const userInfo = reactive({
   code: '808961',
@@ -93,6 +104,30 @@ const userInfo = reactive({
   sy_finsh: 0,
   sy_shengyu: 3
 })
+
+const accountList = [
+  { name: i18n.global.t('my.sy_money'), value: userInfo.sy_money },
+  { name: i18n.global.t('my.sy_zuori'), value: userInfo.sy_zuori },
+  { name: i18n.global.t('my.sy_jinri'), value: userInfo.sy_jinri },
+  { name: i18n.global.t('my.sy_benzhou'), value: userInfo.sy_benzhou },
+  { name: i18n.global.t('my.sy_benyue'), value: userInfo.sy_benyue },
+  { name: i18n.global.t('my.sy_shangyue'), value: userInfo.sy_shangyue },
+  { name: i18n.global.t('my.sy_total'), value: userInfo.sy_total },
+  { name: i18n.global.t('my.sy_finsh'), value: userInfo.sy_finsh },
+  { name: i18n.global.t('my.sy_shengyu'), value: userInfo.sy_shengyu }
+]
+
+const appList = [
+  { name: i18n.global.t('my.info'), icon: info },
+  { name: i18n.global.t('my.load'), icon: download },
+  { name: i18n.global.t('my.excel'), icon: excel },
+  { name: i18n.global.t('my.zbjl'), icon: wallet },
+  { name: i18n.global.t('my.invent'), icon: gift },
+  { name: i18n.global.t('my.team'), icon: team },
+  { name: i18n.global.t('my.help'), icon: help },
+  { name: i18n.global.t('my.tv'), icon: telegram },
+  { name: i18n.global.t('my.center'), icon: flower }
+]
 
 const logout = () => {
   router.push('/login')
@@ -172,6 +207,20 @@ const logout = () => {
             .van-grid-item__content--surround:after,
             .van-grid-item__content:after {
                 border-width: 0;
+            }
+            .van-grid-item__content {
+                color: #0071e3;
+                font-size: 36px;
+                .van-badge__wrapper {
+                    img {
+                        width: 48px;
+                    }
+                }
+                .van-grid-item__text {
+                    color: #ddd;
+                    margin-top: 10px;
+                    text-align: center;
+                }
             }
         }
     }

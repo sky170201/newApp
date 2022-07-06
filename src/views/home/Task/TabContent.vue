@@ -1,10 +1,16 @@
 <template>
-      <van-empty v-if="!taskList.length" description="暂无记录" />
-      <van-pull-refresh v-else v-model="refreshing" @refresh="onRefresh">
+      <van-empty v-if="!taskList.length" :description="$t('task.noRecord')" />
+      <van-pull-refresh
+        v-else
+        :pulling-text="$t('task.pulling')"
+        :loosing-text="$t('task.loosing')"
+        :loading-text="$t('task.loading')"
+        v-model="refreshing"
+        @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          :finished-text="$t('task.noMore')"
           @load="onLoad"
         >
           <!-- <van-cell v-for="item in taskList" :key="item" :title="item" /> -->
@@ -20,13 +26,13 @@
             </template>
             <template #title>
               <p>{{item.type == 4 ? "YouTuBe" : "TikTok"}}</p>
-              <p>要求：点赞</p>
-              <p>创建：{{item.create_time}}</p>
+              <p>{{$t('task.require')}}：{{$t('task.action')}}</p>
+              <p>{{$t('task.created')}}：{{item.create_time}}</p>
             </template>
             <template #right-icon>
               <!-- 状态 state:-1 失败 -->
               <div class="cell-right">
-                <img :src="state4Zh">
+                <img :src="locale === 'zh' ? state4Zh : state4En">
               </div>
             </template>
           </van-cell>
@@ -35,12 +41,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, getCurrentInstance } from 'vue'
 import { data } from './data'
 import youtube from '@/assets/img/youtube.png'
 import tiktok from '@/assets/img/tiktok.png'
 
 import state4Zh from '@/assets/img/state4-zh-CN.png'
+import state4En from '@/assets/img/state4-en-US.png'
+const { proxy } = getCurrentInstance()
+
+const locale = proxy.$i18n.locale
 
 const props = defineProps({
   taskList: {

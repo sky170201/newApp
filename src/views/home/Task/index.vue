@@ -7,10 +7,10 @@
         </template>
     </NavBar>
     <van-tabs v-model:active="active" sticky @click-tab="onClickTab">
-        <van-tab title="进行中(0)" name="progress" />
-        <van-tab title="审核中(0)" name="review" />
-        <van-tab title="已完成(10)" name="completed" />
-        <van-tab title="已失败(15)" name="failed" />
+        <van-tab :title="`${$t('task.progress')}(0)`" name="progress" />
+        <van-tab :title="`${$t('task.review')}(0)`" name="review" />
+        <van-tab :title="`${$t('task.completed')}(10)`" name="completed" />
+        <van-tab :title="`${$t('task.failed')}(15)`" name="failed" />
     </van-tabs>
     <TabContent />
 </template>
