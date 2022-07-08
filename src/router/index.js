@@ -1,37 +1,70 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/home'
-import { mainStore } from '@/store/mainStore.js'
+import { createRouter, createWebHashHistory } from "vue-router";
+import Layout from "@/layout";
+import { mainStore } from "@/store/mainStore.js";
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "home",
+    component: Layout,
+    redirect: "/home",
+    children: [
+      {
+        path: "home",
+        name: "HomePage",
+        component: () => import("@/views/home/Home"),
+      },
+      {
+        path: "hall",
+        name: "HallPage",
+        component: () => import("@/views/home/Hall"),
+      },
+      {
+        path: "level",
+        name: "LevelPage",
+        component: () => import("@/views/home/Level"),
+      },
+      {
+        path: "task",
+        name: "TaskPage",
+        component: () => import("@/views/home/Task"),
+      },
+      {
+        path: "my",
+        name: "MyPage",
+        component: () => import("@/views/home/My"),
+      },
+    ],
   },
-  // {
-  //   path: '/itemMusic',
-  //   name: 'ItemMusic',
-  //   component: () => import('../views/ItemMusic.vue')
-  // },
-  // {
-  //   path: '/search',
-  //   name: 'Search',
-  //   component: () => import('../views/SearchMusic.vue')
-  // },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/login')
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/login"),
   },
   {
-    path: '/chat',
-    name: 'Chat',
-    component: () => import('@/views/chat')
+    path: "/register",
+    name: "Register",
+    component: () => import("@/views/register"),
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/views/register')
-  }
+    path: "/chat",
+    name: "Chat",
+    component: () => import("@/views/chat"),
+  },
+  {
+    path: "/share",
+    name: "Share",
+    component: () => import("@/views/share"),
+  },
+  {
+    path: "/help",
+    name: "Help",
+    component: () => import("@/views/help"),
+  },
+  {
+    path: "/task-list",
+    name: "TaskList",
+    component: () => import("@/views/task-list"),
+  },
   // {
   //   path: '/infoUser',
   //   name: 'InfoUser',
@@ -47,21 +80,21 @@ const routes = [
   //   },
   //   component: () => import('../views/InfoUser.vue')
   // }
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 
 // 全局前置守卫
 router.beforeEach((to, from) => {
-  const store = mainStore()
-  if (to.path === '/login') {
-    store.isFooterMusic = false
+  const store = mainStore();
+  if (to.path === "/login") {
+    store.isFooterMusic = false;
   } else {
-    store.isFooterMusic = true
+    store.isFooterMusic = true;
   }
-})
+});
 
-export default router
+export default router;

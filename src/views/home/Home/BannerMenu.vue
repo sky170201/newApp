@@ -1,14 +1,20 @@
 <template>
     <div class="menu">
-      <div class="menu-item bg-opacity">
+      <div
+        @click="toVip"
+        class="menu-item bg-opacity">
         <span>{{$t('bannerMenu.k1')}}</span>
         <img src="~@/assets/img/m-vip.png">
       </div>
-      <div class="menu-item bg-opacity">
+      <div
+        @click="toHelp"
+        class="menu-item bg-opacity">
         <span>{{$t('bannerMenu.k2')}}</span>
         <img src="~@/assets/img/m-video.png">
       </div>
-      <div class="menu-item bg-opacity">
+      <div
+        @click="toShare"
+        class="menu-item bg-opacity">
         <span>{{$t('bannerMenu.k3')}}</span>
         <img src="~@/assets/img/m-money.png">
       </div>
@@ -16,6 +22,19 @@
 </template>
 
 <script setup>
+import router from '@/router';
+
+const toVip = () => {
+  router.push('/level')
+}
+
+const toHelp = () => {
+  router.push('/help')
+}
+
+const toShare = () => {
+  router.push('/share')
+}
 
 </script>
 

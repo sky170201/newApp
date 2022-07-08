@@ -1,16 +1,17 @@
 <template>
-    <NavBar :isCusLeft="true">
+    <NavBar>
         <template #title>{{$t('chat.title')}}</template>
     </NavBar>
-    <van-cell title="Recharge problem" is-link url="https://github.com" />
-    <van-cell title="Withdrawal problem" is-link url="https://github.com" />
-    <van-cell title="Telegram1" is-link url="https://github.com" />
-    <van-cell title="Telegram2" is-link url="https://github.com" />
+    <van-cell
+      v-for="(item, index) in chatList.filter(o => o.name)"
+      :key="index"
+      :title="item.name" is-link :url="item.url" />
   <!-- <van-cell title="路由跳转" is-link to="index" /> -->
 </template>
 
 <script setup>
 import NavBar from '@/components/NavBar'
+import { chatList } from './data'
 
 </script>
 

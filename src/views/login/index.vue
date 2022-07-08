@@ -2,9 +2,7 @@
   <NavBar>
     <template #title>{{$t('login.title')}}</template>
     <template #right>
-      <SelectLanguage
-        @toggleDropdown="toggleDropdown"
-      />
+      <SelectLanguage />
     </template>
   </NavBar>
   <div class="loginBox">
@@ -18,6 +16,7 @@
       <van-row>
         <van-col span="9">
           <van-field
+            @click-input="clickInput"
             class="area-code"
             v-model="areaCode"
             left-icon="manager"
@@ -54,6 +53,22 @@
     </div>
   </div>
   <Online />
+  <!-- <van-popup v-model:show="show" position="bottom" :style="{ height: '30%' }" /> -->
+  <van-popup v-model:show="showPicker" round position="bottom">
+  <van-picker
+    :columns="columns"
+    :columns-field-names="customFieldName"
+    @cancel="showPicker = false"
+    @confirm="onConfirm"
+  >
+    <!-- 自定义内容选项，作用域插槽 -->
+    <template #option="option">
+      <div class="custom-option">
+        {{option.name}} ——— {{option.code}}
+      </div>
+    </template>
+  </van-picker>
+</van-popup>
 </template>
 <!-- 登录路由组件 -->
 <script setup>
@@ -61,6 +76,7 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 // import { useI18n } from 'vue-i18n'
+import { areasCode } from './data'
 
 import NavBar from '@/components/NavBar'
 import SelectLanguage from '@/views/common/SelectLanguage'
@@ -68,25 +84,31 @@ import Online from '@/views/common/Online'
 
 import { mainStore } from '@/store/mainStore.js'
 import { getLoginUser } from '@/api/homeApi.js'
+
+const columns = areasCode
 const store = mainStore()
 const router = useRouter()
-
-// const { t } = useI18n()
-
-// const title = ref('')
-
-// const toggleDropdown = (type) => {
-//   if (type === 'open') {
-//     title.value = t('selectLang')
-//   } else {
-//     title.value = 'AP New Media'
-//   }
-// }
 
 const areaCode = ref('')
 const phone = ref('')
 const password = ref('')
 const isPassword = ref(false)
+const showPicker = ref(false)
+
+const customFieldName = {
+  text: 'code',
+  children: 'cities'
+}
+
+const onConfirm = ({ code, name }) => {
+  areaCode.value = code
+  showPicker.value = false
+}
+
+const clickInput = (e) => {
+  e.target.blur() // 阻止input获取焦点
+  showPicker.value = true
+}
 
 const clickRightIcon = () => {
   isPassword.value = !isPassword.value
@@ -163,5 +185,18 @@ const onSubmit = async () => {
     }
   }
 
+}
+
+.van-popup {
+  .van-picker {
+    background-color: #151d31;
+    :deep(.van-picker__columns) {
+      .van-picker-column__item {
+        .custom-option {
+          font-size: 32px;
+        }
+      }
+    }
+  }
 }
 </style>

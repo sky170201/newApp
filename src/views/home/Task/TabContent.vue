@@ -1,43 +1,30 @@
 <template>
-      <van-empty v-if="!taskList.length" :description="$t('task.noRecord')" />
-      <van-pull-refresh
-        v-else
-        :pulling-text="$t('task.pulling')"
-        :loosing-text="$t('task.loosing')"
-        :loading-text="$t('task.loading')"
-        v-model="refreshing"
-        @refresh="onRefresh">
-        <van-list
-          v-model:loading="loading"
-          :finished="finished"
-          :finished-text="$t('task.noMore')"
-          @load="onLoad"
-        >
-          <!-- <van-cell v-for="item in taskList" :key="item" :title="item" /> -->
-          <van-cell
-             v-for="(item, index) in taskList"
-             :key="index"
-          >
-            <template #icon>
-              <!-- type:4 youtube type:1 tiktok -->
-              <div class="cell-img">
-                <img :src="item.type == 4 ? youtube : tiktok">
-              </div>
-            </template>
-            <template #title>
-              <p>{{item.type == 4 ? "YouTuBe" : "TikTok"}}</p>
-              <p>{{$t('task.require')}}：{{$t('task.action')}}</p>
-              <p>{{$t('task.created')}}：{{item.create_time}}</p>
-            </template>
-            <template #right-icon>
-              <!-- 状态 state:-1 失败 -->
-              <div class="cell-right">
-                <img :src="locale === 'zh' ? state4Zh : state4En">
-              </div>
-            </template>
-          </van-cell>
-        </van-list>
-      </van-pull-refresh>
+  <van-empty v-if="!taskList.length" :description="$t('task.noRecord')" />
+  <van-pull-refresh v-else :pulling-text="$t('task.pulling')" :loosing-text="$t('task.loosing')"
+    :loading-text="$t('task.loading')" v-model="refreshing" @refresh="onRefresh">
+    <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
+      <!-- <van-cell v-for="item in taskList" :key="item" :title="item" /> -->
+      <van-cell v-for="(item, index) in taskList" :key="index">
+        <template #icon>
+          <!-- type:4 youtube type:1 tiktok -->
+          <div class="cell-img">
+            <img :src="item.type == 4 ? youtube : tiktok">
+          </div>
+        </template>
+        <template #title>
+          <p>{{ item.type == 4 ? "YouTuBe" : "TikTok" }}</p>
+          <p>{{ $t('task.require') }}：{{ $t('task.action') }}</p>
+          <p>{{ $t('task.created') }}：{{ item.create_time }}</p>
+        </template>
+        <template #right-icon>
+          <!-- 状态 state:-1 失败 -->
+          <div class="cell-right">
+            <img :src="locale === 'zh' ? state4Zh : state4En">
+          </div>
+        </template>
+      </van-cell>
+    </van-list>
+  </van-pull-refresh>
 </template>
 
 <script setup>
@@ -97,21 +84,26 @@ const onRefresh = () => {
 .van-pull-refresh {
   height: calc(100% - 280px);
   overflow: auto;
+
   .van-cell {
     border-top: 1px solid #333;
+
     .cell-img {
       width: 64px;
       height: 64px;
       border-radius: 8px;
       background: #fff;
       margin-right: 20px;
+
       img {
         width: 100%;
         // height: 100%;
       }
     }
+
     .cell-right {
       width: 128px;
+
       img {
         width: 100%;
       }
