@@ -20,12 +20,18 @@ export default {
     inventCode: 'Please enter the invitation code',
     submit: 'Sign up'
   },
+  chat: {
+    title: 'Customer service'
+  },
   tabbar: {
     home: 'Home',
     hall: 'Hall',
     level: 'Level',
     task: 'Task',
     my: 'My'
+  },
+  homePopup: {
+    title: 'Latest Announcement'
   },
   noticeSwipe: {
     k1: 'Congratulations to member',
@@ -53,6 +59,7 @@ export default {
     btnName: 'Join now'
   },
   task: {
+    title: 'Mission record',
     progress: 'Progress',
     review: 'Review',
     completed: 'Completed',

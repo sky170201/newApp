@@ -67,6 +67,8 @@ const vipInfo = reactive({
 
 <style scoped lang='less'>
 .vip {
+    height: calc(100% - 100px);
+    overflow: auto;
     .current {
         padding: 30px;
         &-box {

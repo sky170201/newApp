@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-// import { FooterMusicStore } from '@/store/FooterMusic.js'
-// const store = FooterMusicStore()
+// import { mainStore } from '@/store/mainStore.js'
+// const store = mainStore()
 import in18 from './language/i18n'
 console.log(in18.global.t('login.title'))
 

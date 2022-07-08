@@ -20,12 +20,18 @@ export default {
     inventCode: '请输入邀请码',
     submit: '立即注册'
   },
+  chat: {
+    title: '客服'
+  },
   tabbar: {
     home: '首页',
     hall: '大厅',
     level: '会员',
     task: '任务',
     my: '我的'
+  },
+  homePopup: {
+    title: '最新公告'
   },
   noticeSwipe: {
     k1: '恭喜会员',
@@ -53,6 +59,7 @@ export default {
     btnName: '立即加入'
   },
   task: {
+    title: '任务记录',
     progress: '进行中',
     review: '审核中',
     completed: '已完成',

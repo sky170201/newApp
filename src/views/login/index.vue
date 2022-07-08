@@ -53,6 +53,7 @@
       <span @click="register" class="register">{{$t('login.register')}}</span>
     </div>
   </div>
+  <Online />
 </template>
 <!-- 登录路由组件 -->
 <script setup>
@@ -63,10 +64,11 @@ import { ref } from 'vue'
 
 import NavBar from '@/components/NavBar'
 import SelectLanguage from '@/views/common/SelectLanguage'
+import Online from '@/views/common/Online'
 
-import { FooterMusicStore } from '@/store/FooterMusic.js'
+import { mainStore } from '@/store/mainStore.js'
 import { getLoginUser } from '@/api/homeApi.js'
-const store = FooterMusicStore()
+const store = mainStore()
 const router = useRouter()
 
 // const { t } = useI18n()
@@ -153,7 +155,7 @@ const onSubmit = async () => {
   .tip {
     width: 100%;
     text-align: left;
-    font-size: 12px;
+    font-size: 28px;
     padding-left: 30px;
     .register {
       color: #0071e3;

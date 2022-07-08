@@ -77,6 +77,7 @@
       </div>
     </van-form>
   </div>
+  <Online />
 </template>
 <!-- 登录路由组件 -->
 <script setup>
@@ -87,10 +88,11 @@ import { ref } from 'vue'
 
 import NavBar from '@/components/NavBar'
 import SelectLanguage from '@/views/common/SelectLanguage'
+import Online from '@/views/common/Online'
 
-import { FooterMusicStore } from '@/store/FooterMusic.js'
+import { mainStore } from '@/store/mainStore.js'
 import { getLoginUser } from '@/api/homeApi.js'
-const store = FooterMusicStore()
+const store = mainStore()
 const router = useRouter()
 
 const areaCode = ref('')

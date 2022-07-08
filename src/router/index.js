@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/home'
-import { FooterMusicStore } from '@/store/FooterMusic.js'
+import { mainStore } from '@/store/mainStore.js'
 const routes = [
   {
     path: '/',
@@ -21,6 +21,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login')
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: () => import('@/views/chat')
   },
   {
     path: '/register',
@@ -51,7 +56,7 @@ const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach((to, from) => {
-  const store = FooterMusicStore()
+  const store = mainStore()
   if (to.path === '/login') {
     store.isFooterMusic = false
   } else {

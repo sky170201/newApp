@@ -42,7 +42,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 24px;
+      font-size: 28px;
       line-height: 40px;
       img {
         height: 64px;

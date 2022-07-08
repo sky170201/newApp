@@ -123,7 +123,7 @@ const memberList = ref([
     margin: 5px;
     .text {
       line-height: 40px;
-      font-size: 18px;
+      font-size: 28px;
     }
   }
 }

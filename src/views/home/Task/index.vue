@@ -1,10 +1,6 @@
 <template>
     <NavBar :isCusLeft="true">
-        <template #left>
-        </template>
-        <template #title>任务记录</template>
-        <template #right>
-        </template>
+        <template #title>{{$t('task.title')}}</template>
     </NavBar>
     <van-tabs v-model:active="active" sticky @click-tab="onClickTab">
         <van-tab :title="`${$t('task.progress')}(0)`" name="progress" />
