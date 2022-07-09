@@ -20,6 +20,26 @@ export default {
     inventCode: "请输入邀请码",
     submit: "立即注册",
   },
+  notice: {
+    title: "消息",
+    btnText: "全部已读",
+  },
+  taskDetail: {
+    title: "任务详情",
+    taskTitle: "任务标题",
+    taskProfit: "任务收益",
+    taskDes: "任务描述",
+    action: "点赞",
+    taskLink: "任务链接",
+    btn1: "打开链接",
+    btn2: "复制",
+    auditTime: "审核时间",
+    backup: "备注信息",
+    backupPlaceholder: "请您在此输入...",
+    upload: "上传截图",
+    submit: "提交",
+    cancel: "放弃",
+  },
   chat: {
     title: "客服",
   },
@@ -73,6 +93,11 @@ export default {
     level: "级别",
     btnText: "领取",
     price: "单价",
+  },
+  vipPay: {
+    title: "支付方式",
+    online: "在线客服",
+    description: "快捷方便",
   },
   level: {
     btnName: "立即加入",

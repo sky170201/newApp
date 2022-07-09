@@ -1,4 +1,5 @@
 import { Toast } from "vant";
+import i18n from "@/language/i18n";
 
 export function copy(str, text) {
   const input = document.createElement("input");
@@ -14,7 +15,7 @@ export function copy(str, text) {
   }
   try {
     document.execCommand("copy");
-    Toast(text);
+    Toast(text || i18n.global.t("share.copyText"));
   } catch (e) {
     console.error("复制失败，请重试~");
   }

@@ -65,6 +65,21 @@ const routes = [
     name: "TaskList",
     component: () => import("@/views/task-list"),
   },
+  {
+    path: "/vip-pay",
+    name: "VipPay",
+    component: () => import("@/views/vip-pay"),
+  },
+  {
+    path: "/notice",
+    name: "Notice",
+    component: () => import("@/views/notice"),
+  },
+  {
+    path: "/task-detail",
+    name: "TaskDetail",
+    component: () => import("@/views/task-detail"),
+  },
   // {
   //   path: '/infoUser',
   //   name: 'InfoUser',

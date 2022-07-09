@@ -20,6 +20,26 @@ export default {
     inventCode: "Please enter the invitation code",
     submit: "Sign up",
   },
+  notice: {
+    title: "Message",
+    btnText: "All read",
+  },
+  taskDetail: {
+    title: "Mission Details",
+    taskTitle: "Task title",
+    taskProfit: "Mission benefits",
+    taskDes: "Mission details",
+    action: "Like",
+    taskLink: "Task link",
+    btn1: "Open link",
+    btn2: "Copy",
+    auditTime: "",
+    backup: "Remarks",
+    backupPlaceholder: "Please enter here...",
+    upload: "Upload screenshot",
+    submit: "Submit",
+    cancel: "Give up",
+  },
   chat: {
     title: "Customer service",
   },
@@ -73,6 +93,11 @@ export default {
     level: "Level",
     btnText: "Reveive",
     price: "Price",
+  },
+  vipPay: {
+    title: "Payment method",
+    online: "Online service",
+    description: "Fast and convenient",
   },
   level: {
     btnName: "Join now",

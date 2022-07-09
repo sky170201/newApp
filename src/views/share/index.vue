@@ -25,10 +25,9 @@ import NavBar from "@/components/NavBar";
 import { shareData } from "./data";
 import enBg from '@/assets/img/share-en-US.png'
 import { copy } from '@/utils'
-import i18n from '@/language/i18n'
 
 const copyCode = (str) => {
-    copy(str, i18n.global.t('share.copyText'))
+    copy(str)
 }
 
 </script>

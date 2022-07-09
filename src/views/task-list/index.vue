@@ -2,7 +2,7 @@
     <NavBar>
         <template #title>{{ $t('businessHall') }}</template>
     </NavBar>
-    <div class="task-list">
+    <div class="top-100 task-list">
         <van-cell v-for="(item, index) in lists" :key="index">
             <template #icon>
                 <!-- type:4 youtube type:1 tiktok -->
@@ -42,12 +42,11 @@ const lists = ref(deepClone(taskList))
 const reveive = (item) => {
     item.type = 0
 }
+
 </script>
 
 <style scoped lang='less'>
 .task-list {
-    height: calc(100% - 100px);
-    overflow: auto;
 
     .van-cell {
         border-top: 1px solid #0e1526;

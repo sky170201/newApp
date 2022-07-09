@@ -4,7 +4,7 @@
     :loading-text="$t('task.loading')" v-model="refreshing" @refresh="onRefresh">
     <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
       <!-- <van-cell v-for="item in taskList" :key="item" :title="item" /> -->
-      <van-cell v-for="(item, index) in taskList" :key="index">
+      <van-cell @click="toTaskDetail" v-for="(item, index) in taskList" :key="index">
         <template #icon>
           <!-- type:4 youtube type:1 tiktok -->
           <div class="cell-img">
@@ -29,6 +29,7 @@
 
 <script setup>
 import { ref, getCurrentInstance } from 'vue'
+import router from '@/router';
 import { data } from './data'
 import youtube from '@/assets/img/youtube.png'
 import tiktok from '@/assets/img/tiktok.png'
@@ -38,6 +39,10 @@ import state4En from '@/assets/img/state4-en-US.png'
 const { proxy } = getCurrentInstance()
 
 const locale = proxy.$i18n.locale
+
+const toTaskDetail = () => {
+  router.push('/task-detail')
+}
 
 const props = defineProps({
   taskList: {
@@ -86,7 +91,7 @@ const onRefresh = () => {
   overflow: auto;
 
   .van-cell {
-    border-top: 1px solid #333;
+    border-bottom: 1px solid #0e1526;
 
     .cell-img {
       width: 64px;
