@@ -74,8 +74,15 @@ const onConfirm = ({ text, name }) => {
 
 <style scoped lang='less'>
 .wallet {
+
+    :deep(.van-popup) {
+        background-color: #151d31 !important;
+    }
+
     .van-popup {
         .van-picker {
+            background-color: #151d31 !important;
+
             :deep(.van-picker__mask) {
                 background-image: none !important;
             }

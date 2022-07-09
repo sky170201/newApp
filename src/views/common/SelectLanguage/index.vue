@@ -33,6 +33,9 @@ const closeDropdown = (a) => {
 
 <style scoped lang='less'>
 .van-dropdown-menu {
+  display: flex;
+  height: 100%;
+
   :deep(.van-dropdown-menu__bar) {
     .van-ellipsis {
       font-size: 26px !important;
@@ -40,6 +43,7 @@ const closeDropdown = (a) => {
   }
 
   :deep(.van-dropdown-item) {
+
     .van-popup {
       .van-cell {
         padding-left: 100px;
