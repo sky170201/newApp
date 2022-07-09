@@ -25,8 +25,8 @@
                 <div class="link">
                     <span>{{ taskDetail.url }}</span>
                     <div class="btn">
-                        <van-button type="success" size="mini">
-                            <a :herf="taskDetail.url">{{ $t('taskDetail.btn1') }}</a>
+                        <van-button type="success" :url="taskDetail.url" size="mini">
+                            {{ $t('taskDetail.btn1') }}
                         </van-button>
                         <van-button @click="copyLink(taskDetail.url)" style="margin-left: 10px" type="primary"
                             size="mini">{{

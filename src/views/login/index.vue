@@ -1,6 +1,6 @@
 <template>
   <NavBar>
-    <template #title>{{$t('login.title')}}</template>
+    <template #title>{{ $t('login.title') }}</template>
     <template #right>
       <SelectLanguage />
     </template>
@@ -8,67 +8,45 @@
   <div class="loginBox">
     <div class="title">
       <img src="~@/assets/img/app.png">
-      <p
-        style="margin-top: 10px;"
-        class="top-h1">AP New Media</p>
+      <p style="margin-top: 10px;" class="top-h1">AP New Media</p>
     </div>
     <van-form @submit="onSubmit">
       <van-row>
         <van-col span="9">
-          <van-field
-            @click-input="clickInput"
-            class="area-code"
-            v-model="areaCode"
-            left-icon="manager"
-            label="+"
-            type="text"
-            :placeholder="$t('login.areaCode')"
-          />
+          <van-field @click-input="clickInput" class="area-code" v-model="areaCode" left-icon="manager" label="+"
+            type="text" :placeholder="$t('login.areaCode')" />
         </van-col>
         <van-col span="15">
-          <van-field
-            v-model="phone"
-            :placeholder="$t('login.phone')"
-          />
+          <van-field v-model="phone" :placeholder="$t('login.phone')" />
         </van-col>
       </van-row>
-      <van-field
-        v-model="password"
-        clearable
-        :type="isPassword ? 'password':'text'"
-        left-icon="lock"
-        :right-icon="isPassword ? 'closed-eye':'eye-o'"
-        @click-right-icon="clickRightIcon"
-        :placeholder="$t('login.password')"
-      />
+      <van-field v-model="password" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
+        :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
+        :placeholder="$t('login.password')" />
       <div style="margin: 16px;">
         <van-button block type="primary" native-type="submit">
-          {{$t('login.submit')}}
+          {{ $t('login.submit') }}
         </van-button>
       </div>
     </van-form>
     <div class="tip">
-      <span>{{$t('login.noAccount')}}?</span>
-      <span @click="register" class="register">{{$t('login.register')}}</span>
+      <span>{{ $t('login.noAccount') }}?</span>
+      <span @click="register" class="register">{{ $t('login.register') }}</span>
     </div>
   </div>
   <Online />
   <!-- <van-popup v-model:show="show" position="bottom" :style="{ height: '30%' }" /> -->
   <van-popup v-model:show="showPicker" round position="bottom">
-  <van-picker
-    :columns="columns"
-    :columns-field-names="customFieldName"
-    @cancel="showPicker = false"
-    @confirm="onConfirm"
-  >
-    <!-- 自定义内容选项，作用域插槽 -->
-    <template #option="option">
-      <div class="custom-option">
-        {{option.name}} ——— {{option.code}}
-      </div>
-    </template>
-  </van-picker>
-</van-popup>
+    <van-picker :columns="columns" :columns-field-names="customFieldName" @cancel="showPicker = false"
+      @confirm="onConfirm">
+      <!-- 自定义内容选项，作用域插槽 -->
+      <template #option="option">
+        <div class="custom-option">
+          {{ option.name }} ——— {{ option.code }}
+        </div>
+      </template>
+    </van-picker>
+  </van-popup>
 </template>
 <!-- 登录路由组件 -->
 <script setup>
@@ -154,31 +132,37 @@ const onSubmit = async () => {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     img {
       border-radius: 50%;
       width: 100px;
       height: 100px;
     }
   }
+
   .van-button--primary {
-      background-color: #0071e3;
-      border: 1px solid #0071e3;
+    background-color: #0071e3;
+    border: 1px solid #0071e3;
   }
 
   .van-form {
     width: 100%;
+
     .area-code {
       padding-right: 0;
+
       :deep(.van-field__label) {
         width: 0;
       }
     }
   }
+
   .tip {
     width: 100%;
     text-align: left;
     font-size: 28px;
     padding-left: 30px;
+
     .register {
       color: #0071e3;
       margin-left: 20px;
@@ -190,6 +174,7 @@ const onSubmit = async () => {
 .van-popup {
   .van-picker {
     background-color: #151d31;
+
     :deep(.van-picker__columns) {
       .van-picker-column__item {
         .custom-option {

@@ -80,6 +80,11 @@ const routes = [
     name: "TaskDetail",
     component: () => import("@/views/task-detail"),
   },
+  {
+    path: "/my-wallet",
+    name: "MyWallet",
+    component: () => import("@/views/wallet"),
+  },
   // {
   //   path: '/infoUser',
   //   name: 'InfoUser',

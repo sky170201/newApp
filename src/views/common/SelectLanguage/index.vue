@@ -1,16 +1,12 @@
 <template>
   <van-dropdown-menu>
-    <van-dropdown-item
-      @change="changeDropdown"
-      @open="openDropdown"
-      @close="closeDropdown"
-      v-model="value1"
-      :title="$t('selectLang')"
-      :options="option1" />
+    <van-dropdown-item @change="changeDropdown" @open="openDropdown" @close="closeDropdown" v-model="value1"
+      :title="$t('selectLang')" :options="option1" />
   </van-dropdown-menu>
 </template>
 
 <script setup>
+import { changeVantLocaleLang } from '@/language/vantLocal';
 import { ref, getCurrentInstance } from 'vue'
 const { proxy } = getCurrentInstance()
 
@@ -22,6 +18,7 @@ const option1 = [
 
 const changeDropdown = (lang) => {
   proxy.$i18n.locale = lang
+  changeVantLocaleLang(lang)
 }
 const emit = defineEmits(['toggleDropdown'])
 
@@ -38,14 +35,16 @@ const closeDropdown = (a) => {
 .van-dropdown-menu {
   :deep(.van-dropdown-menu__bar) {
     .van-ellipsis {
-      font-size: 26px!important;
+      font-size: 26px !important;
     }
   }
+
   :deep(.van-dropdown-item) {
     .van-popup {
       .van-cell {
         padding-left: 100px;
         position: relative;
+
         &::before {
           content: '';
           display: block;
@@ -57,9 +56,11 @@ const closeDropdown = (a) => {
           transform: translateY(-50%);
         }
       }
+
       .van-cell:nth-child(1)::before {
         background-image: url(~@/assets/img/zh.png);
       }
+
       .van-cell:nth-child(2)::before {
         background-image: url(~@/assets/img/en.png);
       }

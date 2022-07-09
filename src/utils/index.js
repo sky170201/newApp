@@ -39,3 +39,7 @@ export function deepClone(source) {
   });
   return targetObj;
 }
+
+export function isExternal(path) {
+  return /^(https?:|mailto:|tel:)/.test(path);
+}
