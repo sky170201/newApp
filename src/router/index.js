@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Layout from "@/layout";
+import User from "@/views/user";
 import { mainStore } from "@/store/mainStore.js";
 const routes = [
   {
@@ -84,6 +85,34 @@ const routes = [
     path: "/my-wallet",
     name: "MyWallet",
     component: () => import("@/views/wallet"),
+  },
+  {
+    path: "/user",
+    name: "userInfo",
+    redirect: "/user/info",
+    component: User,
+    children: [
+      {
+        path: "info",
+        name: "Info",
+        component: () => import("@/views/user/info"),
+      },
+      {
+        path: "record",
+        name: "record",
+        component: () => import("@/views/user/record"),
+      },
+      {
+        path: "set-bank",
+        name: "SetBank",
+        component: () => import("@/views/user/set/bank"),
+      },
+      {
+        path: "set-usdt",
+        name: "SetUSDT",
+        component: () => import("@/views/user/set/usdt"),
+      },
+    ],
   },
   // {
   //   path: '/infoUser',

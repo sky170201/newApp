@@ -1,34 +1,23 @@
 <template>
-    <div class="member-list">
-      <van-cell :title="$t('memberList.title')" color="#0071e3" icon="friends-o" />
-      <swiper
-        :initialSlide='0'
-        slidesPerView="auto"
-        :autoplay= "{stopOnLastSlide: false,delay: 2000, disableOnInteraction: false}"
-        direction="vertical"
-        :grabCursor="true"
-        :mousewheelControl= "true"
-        :autoHeight= "true"
-        :observer= "true"
-        :observeParents= "true"
-        :loop="true"
-        >
-        <!-- :speed= "1000" 滚动速度 -->
-          <swiper-slide
-            v-for="(item, index) in memberList"
-            :key="index"
-          >
-            <div class="list-item">
-              <span class="text">
-                {{$t('memberList.k1')}}：{{item.user}}
-                <br>
-                {{$t('memberList.k2')}}{{item.num}}, {{$t('memberList.k3')}}{{item.money}}EUR!
-              </span>
-              <van-tag type="primary">+{{item.money}}</van-tag>
-            </div>
-          </swiper-slide>
-        </swiper>
-    </div>
+  <div class="member-list">
+    <van-cell :title="$t('memberList.title')" color="#0071e3" icon="friends-o" />
+    <swiper :initialSlide='0' slidesPerView="auto"
+      :autoplay="{ stopOnLastSlide: false, delay: 2000, disableOnInteraction: false }" direction="vertical"
+      :grabCursor="true" :mousewheelControl="true" :autoHeight="true" :observer="true" :observeParents="true"
+      :loop="true">
+      <!-- :speed= "1000" 滚动速度 -->
+      <swiper-slide v-for="(item, index) in memberList" :key="index">
+        <div class="list-item">
+          <span class="text">
+            {{ $t('memberList.k1') }}：{{ item.user }}
+            <br>
+            {{ $t('memberList.k2') }}{{ item.num }}, {{ $t('memberList.k3') }}{{ item.money }}EUR!
+          </span>
+          <van-tag type="primary">+{{ item.money }}</van-tag>
+        </div>
+      </swiper-slide>
+    </swiper>
+  </div>
 </template>
 
 <script setup>
@@ -107,13 +96,16 @@ const memberList = ref([
 <style scoped lang='less'>
 .member-list {
   margin-bottom: 30px;
+
   :deep(.van-cell__title) {
     font-weight: 700;
     color: #0071e3;
   }
+
   .swiper-container {
-    height: 550px;
+    height: 700px;
   }
+
   .list-item {
     display: flex;
     padding: 25px 20px;
@@ -121,6 +113,7 @@ const memberList = ref([
     justify-content: space-between;
     background-color: #151d31;
     margin: 5px;
+
     .text {
       line-height: 40px;
       font-size: 28px;

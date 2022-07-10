@@ -1,0 +1,95 @@
+export const recordData = {
+  list: [
+    {
+      id: 3984824,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-07-10",
+    },
+    {
+      id: 3850292,
+      money: "5.00",
+      txt: "Invite rewards",
+      times: "2022-07-08",
+    },
+    {
+      id: 2204612,
+      money: "2.00",
+      txt: "Quest rewards",
+      times: "2022-06-23",
+    },
+    {
+      id: 2204491,
+      money: "2.00",
+      txt: "Quest rewards",
+      times: "2022-06-23",
+    },
+    {
+      id: 499374,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-06-05",
+    },
+    {
+      id: 499372,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-06-05",
+    },
+    {
+      id: 499370,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-06-05",
+    },
+    {
+      id: 499366,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-06-05",
+    },
+    {
+      id: 499364,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-06-05",
+    },
+    {
+      id: 491801,
+      money: "3.00",
+      txt: "Quest rewards",
+      times: "2022-06-05",
+    },
+    {
+      id: 157428,
+      money: "2.00",
+      txt: "Quest rewards",
+      times: "2022-05-27",
+    },
+    {
+      id: 109616,
+      money: "5.00",
+      txt: "Invite rewards",
+      times: "2022-05-25",
+    },
+    {
+      id: 80312,
+      money: "5.00",
+      txt: "Invite rewards",
+      times: "2022-05-24",
+    },
+    {
+      id: 76612,
+      money: "5.00",
+      txt: "Invite rewards",
+      times: "2022-05-24",
+    },
+    {
+      id: 76564,
+      money: "5.00",
+      txt: "Invite rewards",
+      times: "2022-05-24",
+    },
+  ],
+  page: 2,
+};
