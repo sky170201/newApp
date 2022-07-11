@@ -1,15 +1,16 @@
 <template>
     <div class="record">
         <NavBar>
-            <template #title>个人信息</template>
+            <template #title>{{title}}</template>
         </NavBar>
-        <van-tabs @click-tab="onClickTab" v-model:active="active">
-            <van-tab title="收入"></van-tab>
-            <van-tab title="解冻"></van-tab>
-            <van-tab title="支出"></van-tab>
-            <van-tab title="充值"></van-tab>
+        <van-tabs @click-tab="onClickTab" v-model:active="active" swipeable>
+            <van-tab name="income" :title="$t('record.income.name')"></van-tab>
+            <van-tab name="thaw" :title="$t('record.thaw.name')"></van-tab>
+            <van-tab name="expenditure" :title="$t('record.expenditure.name')"></van-tab>
+            <van-tab name="recharge" :title="$t('record.recharge.name')"></van-tab>
         </van-tabs>
-        <van-list v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <List :active="active" />
+        <!-- <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
             <div v-for="(item, index) in recordList" :key="index" class="item">
                 <div class="i">
                     <p>
@@ -22,46 +23,48 @@
                     </div>
                 </div>
             </div>
-        </van-list>
+        </van-list> -->
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import NavBar from "@/components/NavBar";
+import List from './List.vue'
+import i18n from '@/language/i18n'
 import { recordData } from './data'
 
-const active = ref(0)
-const onClickTab = (item) => {
-    console.log(item);
+const active = ref('income')
+const title = ref(i18n.global.t('record.income.title'))
+const onClickTab = ({ name }) => {
+  title.value = i18n.global.t(`record.${name}.title`)
 }
 
 const recordList = ref(recordData.list)
 
-const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
 
 const onLoad = () => {
-    // 异步更新数据
-    // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-    setTimeout(() => {
-        for (let i = 0; i < 5; i++) {
-            recordList.value.push({
-                money: "5.00",
-                txt: "Invite rewards",
-                times: "2022-05-24",
-            });
-        }
+  // 异步更新数据
+  // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+  setTimeout(() => {
+    for (let i = 0; i < 5; i++) {
+      recordList.value.push({
+        money: "5.00",
+        txt: "Invite rewards",
+        times: "2022-05-24",
+      });
+    }
 
-        // 加载状态结束
-        loading.value = false;
+    // 加载状态结束
+    loading.value = false;
 
-        // 数据全部加载完成
-        if (recordList.value.length >= 40) {
-            finished.value = true;
-        }
-    }, 1000);
+    // 数据全部加载完成
+    if (recordList.value.length >= 40) {
+      finished.value = true;
+    }
+  }, 1000);
 };
 
 </script>

@@ -1,14 +1,14 @@
 <template>
     <NavBar>
-        <template #title>银行卡</template>
+        <template #title>{{$t('userInfo.bankCard')}}</template>
     </NavBar>
     <div class="bank">
-        <van-field disabled v-model="bankName" label="银行名称" />
-        <van-field disabled v-model="bankUser" label="真实姓名" />
-        <van-field disabled v-model="bankNumber" label="银行账号" />
-        <van-field disabled v-model="occupation" label="预留手机号" />
+        <van-field disabled v-model="bankName" :label="$t('userInfo.bankName')" />
+        <van-field disabled v-model="bankUser" :label="$t('userInfo.realName')" />
+        <van-field disabled v-model="bankNumber" :label="$t('userInfo.bankAccount')" />
+        <van-field disabled v-model="occupation" :label="$t('userInfo.rm')" />
         <div class="btns">
-            <van-button disabled type="primary" block>保存</van-button>
+            <van-button disabled type="primary" block>{{$t('userInfo.saveBtn')}}</van-button>
         </div>
     </div>
 </template>

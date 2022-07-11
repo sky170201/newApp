@@ -142,8 +142,8 @@ export default {
     sy_finsh: "Complete the task today(one)",
     sy_shengyu: "Remaining tasks for today(one)",
     info: "Personal information",
-    load: "Personal information",
-    excel: "Personal information",
+    load: "APP Download",
+    excel: "Daily statement",
     zbjl: "Financial records",
     invent: "Invite friends",
     team: "Team report",
@@ -170,4 +170,64 @@ export default {
     FundPasswordPlaceHolder: "Please enter the fund password",
     submit: "Submit",
   },
+  userInfo: {
+    title: 'Personal information',
+    avatar: 'avatar',
+    accountNumber: 'account number',
+    bankCard: 'Bank card',
+    bankName: 'Bank name',
+    realName: 'Real name',
+    bankAccount: 'Bank account',
+    rm: 'Reserve mobile',
+    usdt: 'USDT-TRC20',
+    usdtp: 'Please enter USDT-TRC20 address',
+    saveBtn: 'Save',
+    setTxt: 'Not set',
+    lp: 'Login password',
+    mlp: 'Modify login password',
+    olp: 'Original login password',
+    olpp: 'Please enter the original login password',
+    nlp: 'New login password',
+    nlpp: 'Please enter a new login password',
+    cp: 'Confirm Password',
+    cpp: 'Please confirm the login password',
+    fp: 'Fund password',
+    mfp: 'Modify the fund password',
+    ofp: 'Original fund password',
+    ofpp: 'Please enter the original fund password',
+    nfp: 'New fund password',
+    nfpp: 'Please enter new fund password',
+    cfp: 'Please confirm the fund password',
+    submitBtn: 'Submit'
+  },
+  record: {
+    income: {
+      name: 'Income',
+      title: 'Account income'
+    },
+    thaw: {
+      name: 'Thaw',
+      title: 'Thaw records'
+    },
+    expenditure: {
+      name: 'Expenditure',
+      title: 'Account spending',
+    },
+    recharge: {
+      name: 'Recharge',
+      title: 'Recharge record'
+    },
+  },
+  credit: {
+    title: 'Credit center',
+    type: 'Good',
+    statement: 'Credit statement',
+    p1: '1. The credit score is assessed once a week',
+    p2: '2. The initial user credit score: 60',
+    p3: '3. If it is detected that the user has done a task to upload a fake Picture deduction for one day: 3 points, maximum deduction: 30 points',
+    p4: '4. If it is not detected that the user is using false pictures, add 1 Points',
+    p5: '5. Credit points below 50 points will be restricted from withdrawing',
+    p6: '6. Credit points below 30 Half the number of assigned tasks',
+    p7: '7. Credit points less than or equal to 0 points will be banned',
+  }
 };

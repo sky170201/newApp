@@ -1,10 +1,10 @@
 <template>
     <div class="info">
         <NavBar>
-            <template #title>个人信息</template>
+            <template #title>{{$t('userInfo.title')}}</template>
         </NavBar>
         <van-uploader>
-            <van-cell title="头像" is-link>
+            <van-cell :title="$t('userInfo.avatar')" is-link>
                 <template #icon>
                     <van-image round width="28px" height="28px" fit="contain" :src="avatarImg" />
                 </template>
@@ -13,7 +13,7 @@
                 </template>
             </van-cell>
         </van-uploader>
-        <van-cell title="手机号" is-link>
+        <van-cell :title="$t('userInfo.accountNumber')" is-link>
             <template #icon>
                 <van-image round width="28px" height="28px" fit="contain" :src="phoneImg" />
             </template>
@@ -21,7 +21,7 @@
                 {{ phone }}
             </template>
         </van-cell>
-        <van-cell title="银行卡" is-link to="/user/set-bank">
+        <van-cell :title="$t('userInfo.bankCard')" is-link to="/user/set-bank">
             <template #icon>
                 <van-image round width="28px" height="28px" fit="contain" :src="bankImg" />
             </template>
@@ -29,22 +29,22 @@
 
             </template>
         </van-cell>
-        <van-cell title="USDT-TRC20" is-link to="/user/set-usdt">
+        <van-cell :title="$t('userInfo.usdt')" is-link to="/user/set-usdt">
             <template #icon>
                 <van-image round width="28px" height="28px" fit="contain" :src="usdtImg" />
             </template>
             <template #value>
-                <span style="color: red">未设置</span>
+                <span style="color: red">{{$t('userInfo.setTxt')}}</span>
             </template>
         </van-cell>
-        <van-cell title="登录密码" is-link @click="clickInput('login')">
+        <van-cell :title="$t('userInfo.lp')" is-link @click="clickInput('login')">
             <template #icon>
                 <van-image round width="28px" height="28px" fit="contain" :src="lPImg" />
             </template>
             <template #value>
             </template>
         </van-cell>
-        <van-cell title="资金密码" is-link @click="clickInput('amount')">
+        <van-cell :title="$t('userInfo.fp')" is-link @click="clickInput('amount')">
             <template #icon>
                 <van-image round width="28px" height="28px" fit="contain" :src="apImg" />
             </template>
@@ -60,7 +60,7 @@
                     :placeholder="modifyCell.cell3p" />
                 <div style="margin: 16px;">
                     <van-button round block type="primary" native-type="submit">
-                        提交
+                        {{$t('userInfo.submitBtn')}}
                     </van-button>
                 </div>
             </van-form>
@@ -70,7 +70,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import i18n from '@/language/i18n'
+
 import NavBar from "@/components/NavBar";
+
 import appImg from '@/assets/img/app.png'
 import avatarImg from '@/assets/img/info_01.png'
 import phoneImg from '@/assets/img/info_02.png'
@@ -84,38 +87,37 @@ const phone = ref('123')
 
 const isShowSetPassword = ref(false)
 
-const modifyTitle = ref('')
 const modifyCell = ref('')
 const originPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
 
 const strategy = {
-    login: {
-        title: '修改登录密码',
-        cell1: '原登录密码',
-        cell1p: '请输入原登录密码',
-        cell2: '新登录密码',
-        cellp2: '请输入新登录密码',
-        cell3: '确认密码',
-        cell3p: '请确认登录密码',
-    },
-    amount: {
-        title: '修改资金密码',
-        cell1: '原资金密码',
-        cell1p: '请输入原资金密码',
-        cell2: '新资金密码',
-        cellp2: '请输入新资金密码',
-        cell3: '确认密码',
-        cell3p: '请确认资金密码',
-    }
+  login: {
+    title: i18n.global.t('userInfo.mlp'),
+    cell1: i18n.global.t('userInfo.olp'),
+    cell1p: i18n.global.t('userInfo.olpp'),
+    cell2: i18n.global.t('userInfo.nlp'),
+    cellp2: i18n.global.t('userInfo.nlpp'),
+    cell3: i18n.global.t('userInfo.cp'),
+    cell3p: i18n.global.t('userInfo.cpp'),
+  },
+  amount: {
+    title: i18n.global.t('userInfo.mfp'),
+    cell1: i18n.global.t('userInfo.ofp'),
+    cell1p: i18n.global.t('userInfo.ofpp'),
+    cell2: i18n.global.t('userInfo.nfp'),
+    cellp2: i18n.global.t('userInfo.nfpp'),
+    cell3: i18n.global.t('userInfo.cp'),
+    cell3p: i18n.global.t('userInfo.cfp'),
+  }
 }
 
 const clickInput = (type) => {
-    console.log(type, strategy[type]);
-    modifyCell.value = strategy[type]
-    console.log(modifyCell.value);
-    isShowSetPassword.value = true
+  console.log(type, strategy[type]);
+  modifyCell.value = strategy[type]
+  console.log(modifyCell.value);
+  isShowSetPassword.value = true
 }
 
 </script>

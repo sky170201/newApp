@@ -44,10 +44,12 @@ import {
   Step,
   Steps,
   Grid,
-  GridItem
+  GridItem,
+  Circle
 } from 'vant'
 /* 放入数组中 */
 const plugins = [
+  Circle,
   Grid,
   GridItem,
   Step,

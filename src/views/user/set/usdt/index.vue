@@ -1,11 +1,11 @@
 <template>
     <NavBar>
-        <template #title>USDT-TRC20</template>
+        <template #title>{{$t('userInfo.usdt')}}</template>
     </NavBar>
     <div class="usdt">
-        <van-field v-model="usdtAddress" label="USDT-TRC20" placeholder="请输入USDT-TRC20地址" />
+        <van-field v-model="usdtAddress" :label="$t('userInfo.usdt')" :placeholder="$t('userInfo.usdtp')" />
         <div class="btns">
-            <van-button type="primary" block>保存</van-button>
+            <van-button type="primary" block>{{$t('userInfo.bankCard')}}</van-button>
         </div>
     </div>
 </template>

@@ -2,7 +2,7 @@
     <NavBar :isCusLeft="true">
         <template #title>{{$t('task.title')}}</template>
     </NavBar>
-    <van-tabs v-model:active="active" sticky @click-tab="onClickTab">
+    <van-tabs v-model:active="active" sticky @click-tab="onClickTab" swipeable>
         <van-tab :title="`${$t('task.progress')}(0)`" name="progress" />
         <van-tab :title="`${$t('task.review')}(0)`" name="review" />
         <van-tab :title="`${$t('task.completed')}(10)`" name="completed" />
