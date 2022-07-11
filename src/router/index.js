@@ -98,6 +98,11 @@ const routes = [
         component: () => import("@/views/user/info"),
       },
       {
+        path: "report",
+        name: "Report",
+        component: () => import("@/views/user/report"),
+      },
+      {
         path: "set-bank",
         name: "SetBank",
         component: () => import("@/views/user/set/bank"),
@@ -111,6 +116,11 @@ const routes = [
         path: "record",
         name: "record",
         component: () => import("@/views/user/record"),
+      },
+      {
+        path: "team",
+        name: "Team",
+        component: () => import("@/views/user/team"),
       },
       {
         path: "credit",

@@ -126,10 +126,10 @@ const accountList = [
 const appList = [
   { name: i18n.global.t('my.info'), icon: info, url: '/user/info' },
   { name: i18n.global.t('my.load'), icon: download, url: '' },
-  { name: i18n.global.t('my.excel'), icon: excel, url: '' },
+  { name: i18n.global.t('my.excel'), icon: excel, url: '/user/report' },
   { name: i18n.global.t('my.zbjl'), icon: wallet, url: '/user/record' },
   { name: i18n.global.t('my.invent'), icon: gift, url: '/share' },
-  { name: i18n.global.t('my.team'), icon: team, url: '' },
+  { name: i18n.global.t('my.team'), icon: team, url: '/user/team' },
   { name: i18n.global.t('my.help'), icon: help, url: '/help' },
   { name: i18n.global.t('my.tv'), icon: telegram, url: 'https://t.me/AP9506' },
   { name: i18n.global.t('my.center'), icon: flower, url: '/user/credit' }
