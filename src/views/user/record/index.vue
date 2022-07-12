@@ -88,7 +88,7 @@ const onLoad = () => {
                 font-size: 30px;
 
                 .amount {
-                    color: #0071e3;
+                    color: @mainColor;
                     font-size: 32px;
                     font-weight: 700;
                 }

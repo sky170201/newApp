@@ -63,10 +63,12 @@ const closeDropdown = (a) => {
 
       .van-cell:nth-child(1)::before {
         background-image: url(~@/assets/img/zh.png);
+        background-size: 100% 100%;
       }
 
       .van-cell:nth-child(2)::before {
         background-image: url(~@/assets/img/en.png);
+        background-size: 100% 100%;
       }
     }
   }

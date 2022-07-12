@@ -40,7 +40,7 @@ import { deepClone } from '@/utils'
 
 const lists = ref(deepClone(taskList))
 const reveive = (item) => {
-    item.type = 0
+  item.type = 0
 }
 
 </script>
@@ -72,7 +72,7 @@ const reveive = (item) => {
 
             span {
                 font-size: 28px;
-                color: #0071e3;
+                color: @mainColor;
             }
         }
     }

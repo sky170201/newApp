@@ -20,10 +20,10 @@
 <script setup>
 
 defineProps({
-    records: {
-        type: Object,
-        default: () => ({})
-    }
+  records: {
+    type: Object,
+    default: () => ({})
+  }
 })
 
 </script>
@@ -42,7 +42,7 @@ table {
         padding: 27px 13px;
 
         em {
-            color: #0071e3;
+            color: @mainColor;
             font-style: normal;
         }
     }

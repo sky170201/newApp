@@ -141,8 +141,8 @@ const onSubmit = async () => {
   }
 
   .van-button--primary {
-    background-color: #0071e3;
-    border: 1px solid #0071e3;
+    background-color: @mainColor;
+    border: 1px solid @mainColor;
   }
 
   .van-form {
@@ -164,7 +164,7 @@ const onSubmit = async () => {
     padding-left: 30px;
 
     .register {
-      color: #0071e3;
+      color: @mainColor;
       margin-left: 20px;
     }
   }

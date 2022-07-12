@@ -99,7 +99,7 @@ const memberList = ref([
 
   :deep(.van-cell__title) {
     font-weight: 700;
-    color: #0071e3;
+    color: @mainColor;
   }
 
   .swiper-container {

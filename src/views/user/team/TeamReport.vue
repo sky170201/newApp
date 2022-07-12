@@ -50,7 +50,7 @@ const reportList = [
             .value {
                 margin-top: 12px;
                 font-size: 40px;
-                color: #0071e3;
+                color: @mainColor;
             }
         }
     }

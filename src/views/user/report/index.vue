@@ -39,10 +39,10 @@ const appList = [
     }
     .van-cell {
         :deep(.van-icon) {
-            color: #0071e3;
+            color: @mainColor;
         }
         :deep(.van-cell__title) {
-            color: #0071e3;
+            color: @mainColor;
             font-weight: 700;
         }
     }
@@ -61,7 +61,7 @@ const appList = [
                 .value {
                     margin-top: 12px;
                     font-size: 40px;
-                    color: #0071e3;
+                    color: @mainColor;
                 }
             }
         }

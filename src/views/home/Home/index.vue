@@ -1,7 +1,7 @@
 <template>
     <NavBar :isCusLeft="true">
         <template #left>
-            <van-icon name="chat-o" @click="openChat" size="24" />
+            <van-icon name="chat-o" @click="openChat" />
         </template>
         <template #title>AP New Media</template>
         <template #right>
@@ -37,7 +37,7 @@
             </div>
             <div @click="main.updateShow(false)
             " class="close">
-                <van-icon size="26" name="close" />
+                <van-icon name="close" />
             </div>
         </van-popup>
     </div>
@@ -59,25 +59,28 @@ import router from '@/router'
 
 const main = mainStore()
 const show = computed({
-    get() {
-        return main.show
-    },
-    set(bool) {
-        main.updateShow(bool)
-    }
+  get () {
+    return main.show
+  },
+  set (bool) {
+    main.updateShow(bool)
+  }
 })
 
 const swiperImages = ref([
-    'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/98b005d9aa53853617efa0f0ab6ecf6f.jpg',
-    'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/77101bb986c474997d2c66a2f6732329.jpg'
+  'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/98b005d9aa53853617efa0f0ab6ecf6f.jpg',
+  'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/77101bb986c474997d2c66a2f6732329.jpg'
 ])
 const openChat = () => {
-    router.push('/notice')
+  router.push('/notice')
 }
 
 </script>
 
 <style scoped lang='less'>
+.van-icon {
+    font-size: 44px;
+}
 .container {
     position: relative;
     width: 100%;
@@ -130,6 +133,9 @@ const openChat = () => {
             margin-top: 20px;
             text-align: center;
             color: #c1c1c1;
+            // .van-icon {
+            //     font-size: 44px;
+            // }
         }
     }
 }

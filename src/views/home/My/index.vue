@@ -1,7 +1,7 @@
 <template>
     <NavBar :isCusLeft="true">
         <template #left>
-            <van-icon name="chat-o" @click="openChat" size="24" />
+            <van-icon name="chat-o" @click="openChat" />
         </template>
         <template #title>{{ $t('my.super') }}:{{ userInfo.pid }}</template>
         <template #right>
@@ -167,6 +167,9 @@ const toMyWallet = () => {
 </script>
 
 <style scoped lang='less'>
+.van-icon {
+    font-size: 44px;
+}
 .container {
     position: relative;
     width: 100%;
@@ -237,7 +240,7 @@ const toMyWallet = () => {
 
                     span {
                         font-size: 36px;
-                        color: #0071e3;
+                        color: @mainColor;
                     }
                 }
             }
@@ -257,7 +260,7 @@ const toMyWallet = () => {
             }
 
             .van-grid-item__content {
-                color: #0071e3;
+                color: @mainColor;
                 font-size: 36px;
 
                 .van-badge__wrapper {

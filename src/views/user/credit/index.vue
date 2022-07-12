@@ -54,10 +54,10 @@ const gradientColor = {
 }
 .van-cell {
   :deep(.van-icon) {
-    color: #0071e3;
+    color: @mainColor;
   }
   :deep(.van-cell__title) {
-    color: #0071e3;
+    color: @mainColor;
   }
 }
 .info {

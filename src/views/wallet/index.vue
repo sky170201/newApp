@@ -53,21 +53,21 @@ const amount = ref('')
 const password = ref('')
 
 const withdraw = () => {
-    console.log('withdraw');
-    withdrawShow.value = true
+  console.log('withdraw');
+  withdrawShow.value = true
 }
 
 const showPicker = ref(false)
 const clickInput = (e) => {
-    e.target.blur() // 阻止input获取焦点
-    showPicker.value = true
+  e.target.blur() // 阻止input获取焦点
+  showPicker.value = true
 }
 
 const columns = withdrawalMethodList
 
 const onConfirm = ({ text, name }) => {
-    method.value = name
-    showPicker.value = false
+  method.value = name
+  showPicker.value = false
 }
 
 </script>
@@ -88,7 +88,7 @@ const onConfirm = ({ text, name }) => {
             }
 
             :deep(.van-picker-column__item--selected) {
-                color: #0071e3 !important;
+                color: @mainColor !important;
             }
         }
     }

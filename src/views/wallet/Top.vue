@@ -22,20 +22,20 @@
 import router from "@/router";
 
 defineProps({
-    walletInfo: {
-        type: Object,
-        default: () => ({})
-    }
+  walletInfo: {
+    type: Object,
+    default: () => ({})
+  }
 })
 
 const emit = defineEmits('withdraw')
 
 const withdraw = () => {
-    emit('withdraw')
+  emit('withdraw')
 }
 
 const toVip = () => {
-    router.push('/level')
+  router.push('/level')
 }
 
 </script>
@@ -50,7 +50,7 @@ const toVip = () => {
 
         .amount {
             font-size: 40px;
-            color: #0071e3;
+            color: @mainColor;
         }
 
         .i {
@@ -60,7 +60,7 @@ const toVip = () => {
             justify-content: center;
 
             span {
-                color: #0071e3;
+                color: @mainColor;
                 font-size: 36px;
                 margin-left: 10px;
             }

@@ -47,7 +47,7 @@ table {
         padding: 27px 13px;
 
         em {
-            color: #0071e3;
+            color: @mainColor;
             font-style: normal;
         }
     }

@@ -137,8 +137,8 @@ const onSubmit = async () => {
     align-items: center;
   }
   .van-button--primary {
-      background-color: #0071e3;
-      border: 1px solid #0071e3;
+      background-color: @mainColor;
+      border: 1px solid @mainColor;
   }
 
   .van-form {
