@@ -30,17 +30,42 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import NavBar from "@/components/NavBar";
-import { taskList } from './data'
+// import { taskList } from './data'
+import { getTaskList, getTaskDraw } from '@/api/home'
 import youtube from '@/assets/img/youtube.png'
 import tiktok from '@/assets/img/tiktok.png'
+import { useRoute } from 'vue-router';
+import { Toast } from 'vant';
+// import { deepClone } from '@/utils'
 
-import { deepClone } from '@/utils'
+// const lists = ref(deepClone(taskList))
+const route = useRoute()
+const page = ref(1)
+const lists = ref([])
+const _getTaskList = async (count) => {
+    const { result } = await getTaskList({ // result -> list & lunbo & page
+        type: 1,
+        level: route.query.level,
+        page: count || page.value
+    })
+    lists.value = result.list
+}
+onMounted(() => {
+    console.log(123);
+    _getTaskList()
+})
 
-const lists = ref(deepClone(taskList))
-const reveive = (item) => {
-  item.type = 0
+const reveive = async (item) => {
+    const res = await getTaskDraw({ id: item.id })
+    console.log(res);
+    if (res.code === 200) {
+        Toast('领取成功')
+        item.type = 0
+    } else if (res.code === 500) {
+        Toast(res.message)
+    }
 }
 
 </script>

@@ -24,7 +24,7 @@
         :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
         :placeholder="$t('login.password')" />
       <div style="margin: 16px;">
-        <van-button block type="primary" native-type="submit">
+        <van-button :loading="isLoading" :loading-text="$t('login.submit')" block type="primary" native-type="submit">
           {{ $t('login.submit') }}
         </van-button>
       </div>
@@ -52,18 +52,26 @@
 <script setup>
 /* 在setup中使用访问路由 */
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-// import { useI18n } from 'vue-i18n'
-import { areasCode } from './data'
+import { ref, onMounted } from 'vue'
+import i18n from '@/language/i18n'
 
 import NavBar from '@/components/NavBar'
 import SelectLanguage from '@/views/common/SelectLanguage'
 import Online from '@/views/common/Online'
 
 import { mainStore } from '@/store/mainStore.js'
-import { getLoginUser } from '@/api/homeApi.js'
 
-const columns = areasCode
+// import { areasCode } from './data'
+import { getAreasCode } from '@/api/getStaticDataApi';
+import { Toast } from 'vant'
+
+const columns = ref([])
+
+onMounted(async () => {
+  const res = await getAreasCode()
+  console.log(res);
+  columns.value = res.result.list
+})
 const store = mainStore()
 const router = useRouter()
 
@@ -72,6 +80,7 @@ const phone = ref('')
 const password = ref('')
 const isPassword = ref(false)
 const showPicker = ref(false)
+const isLoading = ref(false)
 
 const customFieldName = {
   text: 'code',
@@ -97,25 +106,20 @@ const register = () => {
 }
 
 const onSubmit = async () => {
-  router.push('/')
-  return
-  const res = await store.getLogin({ phone: phone.value, password: password.value })
-  console.log(res)
-  if (res.data.code === 200) {
-    // 将用户登录状态传过去
-    store.udpateIsLogin(true)
-    // 将用户id传到发起获取用户详情的接口
-    const result = await getLoginUser(res.data.account.id)
-    console.log('获取用户详情返回的数据:', result)
-    // 将后端返回来的token传去pinia和本地存储
-    store.updateToken(res.data.token)
-    // 将用户详情数据存储到pinia和本地存储
-    store.updateUser(result)
-    // 如果返回的code为200，说明登录成功，跳转个人中心页面
-    router.push('/infoUser')
+  isLoading.value = true
+  if (areaCode.value === '') {
+    Toast(i18n.global.t('login.areaCodeP'));
+  } else if (phone.value === '') {
+    Toast(i18n.global.t('login.phone'));
+  } else if (password.value === '') {
+    Toast(i18n.global.t('login.password'));
   } else {
-    alert('手机号码或密码错误！')
+    await store.getLogin({
+      account: phone.value,
+      password: password.value
+    })
   }
+  isLoading.value = false
 }
 </script>
 <style lang='less' scoped>

@@ -1,78 +1,43 @@
 <template>
   <NavBar>
-    <template #title>{{$t('register.title')}}</template>
+    <template #title>{{ $t('register.title') }}</template>
     <template #right>
-      <SelectLanguage/>
+      <SelectLanguage />
     </template>
   </NavBar>
   <div class="registerBox">
     <div class="title">
-      <p class="top-h1">{{$t('register.welcome')}}</p>
+      <p class="top-h1">{{ $t('register.welcome') }}</p>
     </div>
     <van-form @submit="onSubmit">
       <van-row>
         <van-col span="9">
-          <van-field
-            class="area-code"
-            v-model="areaCode"
-            left-icon="manager"
-            label="+"
-            type="text"
-            :placeholder="$t('login.areaCode')"
-          />
+          <van-field class="area-code" v-model="areaCode" left-icon="manager" label="+" type="text"
+            :placeholder="$t('login.areaCode')" />
         </van-col>
         <van-col span="15">
-          <van-field
-            clearable
-            v-model="phone"
-            :placeholder="$t('register.phone')"
-          />
+          <van-field clearable v-model="phone" :placeholder="$t('register.phone')" />
         </van-col>
       </van-row>
-      <van-row
-        align="center"
-        justify="space-around">
+      <van-row align="center" justify="space-around">
         <van-col span="18">
-          <van-field
-            class="code"
-            clearable
-            v-model="areaCode"
-            left-icon="phone"
-            type="text"
-            :placeholder="$t('register.code')"
-          />
+          <van-field class="code" clearable v-model="areaCode" left-icon="phone" type="text"
+            :placeholder="$t('register.code')" />
         </van-col>
         <van-col span="6">
-          <van-button size="mini" type="primary">{{$t('register.btnCode')}}</van-button>
+          <van-button size="mini" type="primary">{{ $t('register.btnCode') }}</van-button>
         </van-col>
       </van-row>
-      <van-field
-        v-model="password"
-        clearable
-        :type="isPassword ? 'password':'text'"
-        left-icon="lock"
-        :right-icon="isPassword ? 'closed-eye':'eye-o'"
-        @click-right-icon="clickRightIcon"
-        :placeholder="$t('register.password1')"
-      />
-      <van-field
-        v-model="password"
-        clearable
-        :type="isPassword ? 'password':'text'"
-        left-icon="lock"
-        :right-icon="isPassword ? 'closed-eye':'eye-o'"
-        @click-right-icon="clickRightIcon"
-        :placeholder="$t('register.password2')"
-      />
-      <van-field
-        v-model="password"
-        clearable
-        left-icon="lock"
-        :placeholder="$t('register.inventCode')"
-      />
+      <van-field v-model="password" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
+        :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
+        :placeholder="$t('register.password1')" />
+      <van-field v-model="password" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
+        :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
+        :placeholder="$t('register.password2')" />
+      <van-field v-model="password" clearable left-icon="lock" :placeholder="$t('register.inventCode')" />
       <div style="margin: 16px;">
         <van-button block type="primary" native-type="submit">
-          {{$t('register.submit')}}
+          {{ $t('register.submit') }}
         </van-button>
       </div>
     </van-form>
@@ -91,7 +56,7 @@ import SelectLanguage from '@/views/common/SelectLanguage'
 import Online from '@/views/common/Online'
 
 import { mainStore } from '@/store/mainStore.js'
-import { getLoginUser } from '@/api/homeApi.js'
+// import { getLoginUser } from '@/api/homeApi.js'
 const store = mainStore()
 const router = useRouter()
 
@@ -136,15 +101,18 @@ const onSubmit = async () => {
     flex-direction: column;
     align-items: center;
   }
+
   .van-button--primary {
-      background-color: @mainColor;
-      border: 1px solid @mainColor;
+    background-color: @mainColor;
+    border: 1px solid @mainColor;
   }
 
   .van-form {
     width: 100%;
+
     .area-code {
       padding-right: 0;
+
       :deep(.van-field__label) {
         width: 0;
       }

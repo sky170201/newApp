@@ -7,7 +7,7 @@
             </div>
         </div>
         <ul class="vip-box">
-            <li @click="toVipPay" class="vip-box-item" v-for="(item, index) in vipInfo.list" :key="index">
+            <li @click="() => toVipPay(item)" class="vip-box-item" v-for="(item, index) in vipInfo.list" :key="index">
                 <p class="main">{{ item.name }} <span class="light-text">{{ item.money }}EUR</span></p>
                 <div class="content">
                     <p>{{ $t('hall.taskName') }}：<span class="light-text">{{ item.num }}</span></p>
@@ -19,55 +19,31 @@
 </template>
 
 <script setup>
+import { getVipInfo } from '@/api/home';
 import router from '@/router';
-import { reactive } from 'vue'
-
-const toVipPay = () => {
-    router.push('/vip-pay')
-}
+import { onMounted, reactive } from 'vue'
 
 const vipInfo = reactive({
-    vip: 'AP1',
-    num: 3,
-    list: [
-        {
-            id: 4,
-            name: 'AP2',
-            money: 400,
-            num: 6,
-            isshow: 1,
-            remark: '',
-            limit: 'AP2'
-        },
-        {
-            id: 5,
-            name: 'AP3',
-            money: 800,
-            num: 8,
-            isshow: 1,
-            remark: '',
-            limit: 'AP3'
-        },
-        {
-            id: 7,
-            name: 'AP4',
-            money: 1500,
-            num: 10,
-            isshow: 1,
-            remark: '',
-            limit: 'AP4'
-        },
-        {
-            id: 9,
-            name: 'AP5',
-            money: 3000,
-            num: 15,
-            isshow: 1,
-            remark: '',
-            limit: 'AP5'
-        }
-    ]
+    vip: '',
+    num: '',
+    list: []
 })
+onMounted(async () => {
+    const { result } = await getVipInfo()
+    vipInfo.vip = result.vip
+    vipInfo.num = result.num
+    vipInfo.list = result.list
+})
+
+const toVipPay = (item) => {
+    router.push({
+        path: '/vip-pay',
+        query: {
+            level: item.id
+        }
+    })
+}
+
 </script>
 
 <style scoped lang='less'>

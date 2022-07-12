@@ -1,0 +1,42 @@
+const vipInfo = {
+  vip: "AP1",
+  num: 3,
+  list: [
+    {
+      id: 4,
+      name: "AP2",
+      money: 400,
+      num: 6,
+      isshow: 1,
+      remark: "",
+      limit: "AP2",
+    },
+    {
+      id: 5,
+      name: "AP3",
+      money: 800,
+      num: 8,
+      isshow: 1,
+      remark: "",
+      limit: "AP3",
+    },
+    {
+      id: 7,
+      name: "AP4",
+      money: 1500,
+      num: 10,
+      isshow: 1,
+      remark: "",
+      limit: "AP4",
+    },
+    {
+      id: 9,
+      name: "AP5",
+      money: 3000,
+      num: 15,
+      isshow: 1,
+      remark: "",
+      limit: "AP5",
+    },
+  ],
+};

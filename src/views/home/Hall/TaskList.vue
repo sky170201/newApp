@@ -1,7 +1,7 @@
 <template>
   <ul class="task-list">
-    <li class="task-list-item" @click="toTaskList" v-for="(item, index) in list" :key="index">
-      <van-tag v-if="index === 1" color="#ffe1e1" text-color="#ad0000">{{ $t('hall.level') }}</van-tag>
+    <li class="task-list-item" @click="() => toTaskList(item, index)" v-for="(item, index) in list" :key="index">
+      <van-tag v-if="item.name === myVip" color="#ffe1e1" text-color="#ad0000">{{ $t('hall.level') }}</van-tag>
       <p>{{ item.name }}</p>
       <div>{{ $t('hall.taskName') }}：{{ item.day_limit_task_num }}</div>
     </li>
@@ -10,7 +10,7 @@
 
 <script setup>
 import router from '@/router';
-
+import { mainStore } from '@/store/mainStore'
 defineProps({
   list: {
     type: Array,
@@ -18,8 +18,18 @@ defineProps({
   }
 })
 
-const toTaskList = () => {
-  router.push('/task-list')
+const main = mainStore()
+const myVip = main.user.vip
+
+const toTaskList = (item, index) => {
+  // console.log(item, index);
+  router.push({
+    path: '/task-list',
+    query: {
+      level: index
+      // ? type = 1 & level=2& page=1
+    }
+  })
 }
 
 </script>

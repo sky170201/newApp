@@ -10,29 +10,29 @@
     </NavBar>
     <div class="container">
         <!-- 轮播图 -->
-        <SwiperTop :images="swiperImages"></SwiperTop>
-        <VerticalNotice />
+        <SwiperTop v-if="swiperImages.length" :images="swiperImages"></SwiperTop>
+        <VerticalNotice v-if="swipeList.length" :swipeList="swipeList" />
         <div class="line"></div>
         <BannerMenu />
         <div class="line"></div>
-        <van-notice-bar class="bg-opacity" left-icon="volume-o"
-            text="Welcome to AP New Media Platform. Newly registered members can get 6 USDT rewards after working for 15 consecutive days. Invite friends to register AP account and get 5 euros" />
+        <van-notice-bar class="bg-opacity" left-icon="volume-o" :text="noticeText" />
         <div class="line"></div>
         <img class="welcome-img" src="~@/assets/img/balance-welcome.png" />
         <div class="line"></div>
         <TaskHall />
         <div class="line"></div>
-        <MemberList />
+        <MemberList v-if="memberList.length" :memberList="memberList" />
         <van-popup overlay-class="announcement" round v-model:show="show">
             <div class="popup">
                 <div class="title">{{ $t('homePopup.title') }}</div>
                 <div class="content">
-                    <p>A letter to all members</p>
+                    <!-- <p>A letter to all members</p>
                     <div>Activated AP level members before April, members who have no violations during 90 days of work
                         should apply to AP New Media for refund of the deposit before the 15th of this month, AP New
                         Media will refund the activation level deposit within 24 hours after receiving the application
                         review and approval , MasterCard Bank maintenance is over, now you can recharge normally
-                    </div>
+                    </div> -->
+                    {{ tanchuangText }}
                 </div>
             </div>
             <div @click="main.updateShow(false)
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import NavBar from '@/components/NavBar'
 import SelectLanguage from '@/views/common/SelectLanguage'
 import Online from '@/views/common/Online'
@@ -56,23 +56,44 @@ import TaskHall from './TaskHall'
 import MemberList from './MemberList'
 import { mainStore } from '@/store/mainStore'
 import router from '@/router'
+import { getHomeInfo } from '@/api/home'
 
 const main = mainStore()
-const show = computed({
-  get () {
-    return main.show
-  },
-  set (bool) {
-    main.updateShow(bool)
-  }
+const swiperImages = ref([
+    // 'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/98b005d9aa53853617efa0f0ab6ecf6f.jpg',
+    // 'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/77101bb986c474997d2c66a2f6732329.jpg'
+])
+const swipeList = ref([])
+// Welcome to AP New Media Platform. Newly registered members can get 6 USDT rewards after working for 15 consecutive days. Invite friends to register AP account and get 5 euros
+const noticeText = ref('')
+const memberList = ref([])
+const tanchuangText = ref('')
+
+onMounted(async () => {
+    const { result } = await getHomeInfo()
+    console.log(result);
+    swiperImages.value = result.lunbo.map(item => item.thumb)
+    swipeList.value = result.gundong
+    noticeText.value = result.gonggao
+    memberList.value = result.bangdan
+    tanchuangText.value = result.tanchaung
+    main.setLink({
+        app: result.app,
+        telegram: result.telegram
+    })
 })
 
-const swiperImages = ref([
-  'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/98b005d9aa53853617efa0f0ab6ecf6f.jpg',
-  'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/77101bb986c474997d2c66a2f6732329.jpg'
-])
+const show = computed({
+    get() {
+        return main.show
+    },
+    set(bool) {
+        main.updateShow(bool)
+    }
+})
+
 const openChat = () => {
-  router.push('/notice')
+    router.push('/notice')
 }
 
 </script>
@@ -81,6 +102,7 @@ const openChat = () => {
 .van-icon {
     font-size: 44px;
 }
+
 .container {
     position: relative;
     width: 100%;

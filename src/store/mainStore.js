@@ -1,6 +1,8 @@
-// import { getMusicLyric } from '@/api/itemApi'
-import { getPhoneLogin } from "@/api/homeApi.js";
 import { defineStore } from "pinia";
+import { login, getUserInfo } from "@/api/login.js";
+import { Toast } from "vant";
+import { setSessionStorage } from "@/utils/auth";
+import router from "@/router";
 
 export const mainStore = defineStore("main", {
   state: () => {
@@ -8,34 +10,42 @@ export const mainStore = defineStore("main", {
       token: "", // 接收后台返回的token字段
       user: {}, // 用户信息
       show: true, // 首页公告弹框
+      telegram: "",
+      app: "",
     };
   },
 
   getters: {},
   actions: {
+    // 设置外链
+    setLink({ app, telegram }) {
+      this.app = app;
+      this.telegram = telegram;
+    },
     // 更新首页公告弹框状态
     updateShow(bool) {
       this.show = bool;
     },
     // 登录请求
-    async getLogin(value) {
-      const res = await getPhoneLogin(value);
-      console.log("登录返回的数据：", res);
-      return res;
-    },
-    // 更新登录状态
-    udpateIsLogin(value) {
-      this.isLogin = value;
-    },
-    // 更新token字段
-    updateToken(value) {
-      this.token = value;
-      localStorage.setItem("token", this.token);
-    },
-    // 更新用户信息
-    updateUser(value) {
-      this.user = value;
-      localStorage.setItem("mydata", JSON.stringify(this.user));
+    async getLogin(data) {
+      return new Promise(async (resolve) => {
+        try {
+          const res = await login(data);
+          if (res.code === 500) {
+            Toast(res.message);
+          } else {
+            const token = res.result.token;
+            this.token = token;
+            setSessionStorage("TOKEN", token);
+            const user = await getUserInfo();
+            this.user = user.result;
+            router.push("/");
+          }
+          resolve();
+        } catch (error) {
+          resolve();
+        }
+      });
     },
   },
 });
