@@ -10,7 +10,7 @@ import { changeVantLocaleLang } from '@/language/vantLocal';
 import { ref, getCurrentInstance } from 'vue'
 const { proxy } = getCurrentInstance()
 
-const value1 = proxy.$i18n.locale || ref('zh')
+const value1 = ref(proxy.$i18n.locale || 'zh')
 const option1 = [
   { text: '中文', value: 'zh' },
   { text: 'English', value: 'en' }
