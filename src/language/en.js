@@ -1,5 +1,8 @@
 export default {
   selectLang: "Language",
+  article: {
+    title: 'Details'
+  },
   login: {
     title: "Login in",
     areaCodeP: "Please enter country code",
@@ -86,6 +89,7 @@ export default {
   hall: {
     taskName: "Daily tasks",
     level: "Current level",
+    noLevel: "Your level is not enough"
   },
   taskHall: {
     // title: 'Business Hall'
@@ -94,11 +98,14 @@ export default {
     level: "Level",
     btnText: "Reveive",
     price: "Price",
+    upload: 'Please upload screenshot'
   },
   vipPay: {
     title: "Payment method",
     online: "Online service",
     description: "Fast and convenient",
+    noMoney: 'Insufficient balance',
+    address: 'deposit address'
   },
   level: {
     btnName: "Join now",
@@ -118,6 +125,7 @@ export default {
     pulling: "Drop down to refresh...",
     loosing: "Free to refresh...",
     loading: "loading...",
+    dialogText: "Submitted successfully"
   },
   my: {
     super: "My superior",

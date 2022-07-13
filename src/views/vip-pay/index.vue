@@ -35,33 +35,37 @@ import { getVipPayInfo, payForUsdt } from "@/api/home";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { Dialog, Toast } from "vant";
+import i18n from '@/language/i18n'
+import router from "@/router";
 
 const route = useRoute()
 const vipPayList = ref([])
 onMounted(async () => {
-    const { result } = await getVipPayInfo({ level: route.query.level })
-    vipPayList.value = result
+  const { result } = await getVipPayInfo({ level: route.query.level })
+  vipPayList.value = result
 })
 const action = async (item, idx) => {
-    if (idx === 0) {
+  if (idx === 0) {
 
-    } else if (idx === 1) {
-        const res = await payForUsdt({
-            id: item.id,
-            level: route.query.leve
-        })
-        console.log(res);
-        if (res.result.status === 0) {
-            Dialog.alert({
-                message: '余额不足',
-                // confirmButtonText: ''
-            }).then(() => {
-                // on close
-            });
-        } else if (res.code === 500) {
-            Toast(res.message)
-        }
+  } else if (idx === 1) {
+    const res = await payForUsdt({
+      id: item.id,
+      level: route.query.leve
+    })
+    console.log(res);
+    if (res.result.status === 0) {
+      Dialog.alert({
+        message: i18n.global.t('vipPay.noMoney'),
+        theme: 'round-button',
+        confirmButtonColor: '#0071e3'
+      }).then(() => {
+        // on close
+        router.push('/vip-usdt')
+      });
+    } else if (res.code === 500) {
+      Toast(res.message)
     }
+  }
 }
 
 </script>

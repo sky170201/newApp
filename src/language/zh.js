@@ -1,5 +1,8 @@
 export default {
   selectLang: "选择语言",
+  article: {
+    title: '详情'
+  },
   login: {
     title: "登录",
     areaCodeP: "请选择区号",
@@ -86,6 +89,7 @@ export default {
   hall: {
     taskName: "每日任务数",
     level: "当前等级",
+    noLevel: '您的等级不足'
   },
   taskHall: {
     // title: '任务大厅'
@@ -94,11 +98,14 @@ export default {
     level: "级别",
     btnText: "领取",
     price: "单价",
+    upload: '请上传截图'
   },
   vipPay: {
     title: "支付方式",
     online: "在线客服",
     description: "快捷方便",
+    noMoney: '余额不足',
+    address: '充值地址'
   },
   level: {
     btnName: "立即加入",
@@ -112,12 +119,13 @@ export default {
     require: "要求",
     action: "点赞",
     created: "创建",
-    audit: "编辑",
+    audit: "审核",
     noRecord: "暂无记录",
     noMore: "没有更多了",
     pulling: "下拉即可刷新...",
     loosing: "释放即可刷新...",
     loading: "加载中...",
+    dialogText: '提交成功'
   },
   my: {
     super: "我的上级",

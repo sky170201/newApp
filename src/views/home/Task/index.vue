@@ -2,27 +2,123 @@
     <NavBar :isCusLeft="true">
         <template #title>{{$t('task.title')}}</template>
     </NavBar>
-    <van-tabs v-model:active="active" sticky @click-tab="onClickTab" swipeable>
-        <van-tab :title="`${$t('task.progress')}(0)`" name="progress" />
-        <van-tab :title="`${$t('task.review')}(0)`" name="review" />
-        <van-tab :title="`${$t('task.completed')}(10)`" name="completed" />
-        <van-tab :title="`${$t('task.failed')}(15)`" name="failed" />
+    <van-tabs v-model:active="initData.active" sticky @click-tab="onClickTab" swipeable>
+        <van-tab :title="`${$t('task.progress')}(${initData.process})`" name="progress">
+          <TabContent
+            @onRefresh="onRefresh"
+            @onLoad="onLoad"
+            v-model:loading="initData.loading"
+            v-model:finished="initData.finished"
+            v-model:refreshing="initData.refreshing"
+            :taskList="initData.taskList" :active="initData.active" />
+        </van-tab>
+        <van-tab :title="`${$t('task.review')}(${initData.check})`" name="review">
+          <TabContent
+            @onRefresh="onRefresh"
+            @onLoad="onLoad"
+            v-model:loading="initData.loading"
+            v-model:finished="initData.finished"
+            v-model:refreshing="initData.refreshing"
+            :taskList="initData.taskList" :active="initData.active" />
+        </van-tab>
+        <van-tab :title="`${$t('task.completed')}(${initData.finsh})`" name="completed">
+          <TabContent
+            @onRefresh="onRefresh"
+            @onLoad="onLoad"
+            v-model:loading="initData.loading"
+            v-model:finished="initData.finished"
+            v-model:refreshing="initData.refreshing"
+            :taskList="initData.taskList" :active="initData.active" />
+        </van-tab>
+        <van-tab :title="`${$t('task.failed')}(${initData.cancel})`" name="failed">
+          <TabContent
+            @onRefresh="onRefresh"
+            @onLoad="onLoad"
+            v-model:loading="initData.loading"
+            v-model:finished="initData.finished"
+            v-model:refreshing="initData.refreshing"
+            :taskList="initData.taskList" :active="initData.active" />
+        </van-tab>
     </van-tabs>
-    <TabContent />
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 import NavBar from '@/components/NavBar'
 import TabContent from './TabContent.vue'
+import { getTaskRecordList } from '@/api/home'
 
-const active = ref('progress')
-const onClickTab = ({ title, name }) => console.log(title, name)
+const statusMap = {
+  progress: 0,
+  review: 1,
+  completed: 2,
+  failed: 3,
+}
+
+const initData = reactive({
+  process: 0,
+  check: 0,
+  finsh: 0,
+  cancel: 0,
+  page: 1,
+  active: 'process',
+  taskList: [],
+  loading: false,
+  finished: false,
+  refreshing: false
+})
+
+const setData = () => {
+  initData.page = 1
+  initData.loading = false
+  initData.finished = false
+  initData.refreshing = false
+}
+const onClickTab = ({ title, name }) => {
+  setData()
+  _getTaskRecordList()
+}
+
+const _getTaskRecordList = async (flag) => {
+  const { result } = await getTaskRecordList({
+    status: statusMap[initData.active],
+    page: initData.page
+  })
+  if (flag) {
+    initData.taskList.push(...result.list)
+    initData.loading = false
+  } else {
+    initData.process = result.process
+    initData.check = result.check
+    initData.finsh = result.finsh
+    initData.cancel = result.cancel
+    initData.taskList = result.list
+    initData.refreshing = false
+  }
+  if (initData.page === result.page) {
+    initData.finished = true
+  }
+}
+onMounted(async () => {
+  _getTaskRecordList()
+})
+
+const onRefresh = () => {
+  initData.page = 1
+  // 重新加载数据
+  _getTaskRecordList()
+}
+const onLoad = () => {
+  initData.page += 1
+  _getTaskRecordList('load')
+}
 
 </script>
 
 <style scoped lang='less'>
 .van-tabs {
+    // height: calc(100% - 192px);
+    // overflow: auto;
     :deep(.van-tabs__content) {
         background: #0e1526 !important;
     }

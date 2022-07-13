@@ -4,11 +4,11 @@
         <van-tabs v-model:active="active" sticky swipeable>
             <van-tab name="TikTok">
                 <template #title><img :src="active === 'TikTok' ? tiktokActive : tiktokTab"> TikTok </template>
-                <TaskList :list="list" />
+                <TaskList :active="active" :list="list" />
             </van-tab>
             <van-tab name="YouTuBe">
                 <template #title><img :src="active === 'YouTuBe' ? youtubeActive : youtubeTab"> YouTuBe </template>
-                <TaskList :list="list" />
+                <TaskList :active="active" :list="list" />
             </van-tab>
         </van-tabs>
     </div>
@@ -30,23 +30,23 @@ const route = useRoute()
 
 const active = ref(route.query.type || 'TikTok')
 const banner = ref([
-    // 'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/979b2f58fb2185c231c8642a2d9eeb01.jpg',
-    // 'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/2cf6c44903e55d31f6c0c85cb93544dc.png'
+  // 'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/979b2f58fb2185c231c8642a2d9eeb01.jpg',
+  // 'http://mimgs.oss-cn-hongkong.aliyuncs.com/f/2cf6c44903e55d31f6c0c85cb93544dc.png'
 ])
 
 const list = ref([
-    // { name: 'AP0', day_limit_task_num: 2 },
-    // { name: 'AP1', day_limit_task_num: 3 },
-    // { name: 'AP2', day_limit_task_num: 6 },
-    // { name: 'AP3', day_limit_task_num: 8 },
-    // { name: 'AP4', day_limit_task_num: 10 },
-    // { name: 'AP5', day_limit_task_num: 15 }
+  // { name: 'AP0', day_limit_task_num: 2 },
+  // { name: 'AP1', day_limit_task_num: 3 },
+  // { name: 'AP2', day_limit_task_num: 6 },
+  // { name: 'AP3', day_limit_task_num: 8 },
+  // { name: 'AP4', day_limit_task_num: 10 },
+  // { name: 'AP5', day_limit_task_num: 15 }
 ])
 
 onMounted(async () => {
-    const { result } = await getAllVipList()
-    banner.value = result.banner.map(item => item.thumb)
-    list.value = result.list
+  const { result } = await getAllVipList()
+  banner.value = result.banner.map(item => item.thumb)
+  list.value = result.list
 })
 </script>
 

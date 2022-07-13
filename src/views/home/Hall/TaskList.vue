@@ -11,25 +11,49 @@
 <script setup>
 import router from '@/router';
 import { mainStore } from '@/store/mainStore'
-defineProps({
+import { Dialog } from 'vant';
+import i18n from '@/language/i18n'
+
+const props = defineProps({
   list: {
     type: Array,
     default: () => ([])
+  },
+  active: {
+    type: String,
+    default: ''
   }
 })
 
 const main = mainStore()
 const myVip = main.user.vip
+const typeMap = {
+  TikTok: 1,
+  YouTuBe: 4
+}
 
 const toTaskList = (item, index) => {
-  // console.log(item, index);
-  router.push({
-    path: '/task-list',
-    query: {
-      level: index
-      // ? type = 1 & level=2& page=1
-    }
-  })
+  const currentVip = myVip.slice(2)
+  const targetVip = item.name.slice(2)
+  if (currentVip < targetVip) {
+    Dialog.alert({
+      title: i18n.global.t('my.exitConfirmTitle'),
+      message: i18n.global.t('hall.noLevel'),
+      theme: 'round-button',
+      confirmButtonColor: '#0071e3'
+    }).then(() => {
+      // on close
+    });
+  } else {
+    router.push({
+      path: '/task-list',
+      query: {
+        level: index,
+        type: typeMap[props.active]
+        // ? type = 1 & level=2& page=1
+      }
+    })
+  }
 }
 
 </script>
