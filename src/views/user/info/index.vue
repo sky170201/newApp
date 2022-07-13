@@ -1,15 +1,15 @@
 <template>
     <div class="info">
         <NavBar>
-            <template #title>{{$t('userInfo.title')}}</template>
+            <template #title>{{ $t('userInfo.title') }}</template>
         </NavBar>
-        <van-uploader>
+        <van-uploader :after-read="afterRead">
             <van-cell :title="$t('userInfo.avatar')" is-link>
                 <template #icon>
                     <van-image round width="28px" height="28px" fit="contain" :src="avatarImg" />
                 </template>
                 <template #value>
-                    <van-image round width="40px" height="40px" fit="contain" :src="avatar" />
+                    <van-image round width="40px" height="40px" fit="cover" :src="avatar" />
                 </template>
             </van-cell>
         </van-uploader>
@@ -34,7 +34,7 @@
                 <van-image round width="28px" height="28px" fit="contain" :src="usdtImg" />
             </template>
             <template #value>
-                <span style="color: red">{{$t('userInfo.setTxt')}}</span>
+                <span v-if="!main.user.set_bank" style="color: red">{{ $t('userInfo.setTxt') }}</span>
             </template>
         </van-cell>
         <van-cell :title="$t('userInfo.lp')" is-link @click="clickInput('login')">
@@ -60,7 +60,7 @@
                     :placeholder="modifyCell.cell3p" />
                 <div style="margin: 16px;">
                     <van-button round block type="primary" native-type="submit">
-                        {{$t('userInfo.submitBtn')}}
+                        {{ $t('userInfo.submitBtn') }}
                     </van-button>
                 </div>
             </van-form>
@@ -74,16 +74,32 @@ import i18n from '@/language/i18n'
 
 import NavBar from "@/components/NavBar";
 
-import appImg from '@/assets/img/app.png'
+// import appImg from '@/assets/img/app.png'
 import avatarImg from '@/assets/img/info_01.png'
 import phoneImg from '@/assets/img/info_02.png'
 import bankImg from '@/assets/img/info_03.png'
 import usdtImg from '@/assets/img/info_04.png'
 import lPImg from '@/assets/img/info_05.png'
 import apImg from '@/assets/img/info_06.png'
+import { uploadFile } from '@/api/home';
+import { updateAvatar } from '@/api/myApi';
+import { mainStore } from '@/store/mainStore';
 
-const avatar = ref(appImg)
+// import
+const main = mainStore()
+const avatar = ref(main.user.avatar)
 const phone = ref('123')
+const afterRead = async (file) => {
+    console.log(123);
+    // 此时可以自行将文件上传至服务器
+    const formData = new FormData()
+    formData.append('pic', file.file)
+    const { result } = await uploadFile(formData)
+    const { code, message } = await updateAvatar({ image: result })
+    if (code === 200) {
+        avatar.value = result
+    }
+};
 
 const isShowSetPassword = ref(false)
 
@@ -93,31 +109,29 @@ const newPassword = ref('')
 const confirmPassword = ref('')
 
 const strategy = {
-  login: {
-    title: i18n.global.t('userInfo.mlp'),
-    cell1: i18n.global.t('userInfo.olp'),
-    cell1p: i18n.global.t('userInfo.olpp'),
-    cell2: i18n.global.t('userInfo.nlp'),
-    cellp2: i18n.global.t('userInfo.nlpp'),
-    cell3: i18n.global.t('userInfo.cp'),
-    cell3p: i18n.global.t('userInfo.cpp'),
-  },
-  amount: {
-    title: i18n.global.t('userInfo.mfp'),
-    cell1: i18n.global.t('userInfo.ofp'),
-    cell1p: i18n.global.t('userInfo.ofpp'),
-    cell2: i18n.global.t('userInfo.nfp'),
-    cellp2: i18n.global.t('userInfo.nfpp'),
-    cell3: i18n.global.t('userInfo.cp'),
-    cell3p: i18n.global.t('userInfo.cfp'),
-  }
+    login: {
+        title: i18n.global.t('userInfo.mlp'),
+        cell1: i18n.global.t('userInfo.olp'),
+        cell1p: i18n.global.t('userInfo.olpp'),
+        cell2: i18n.global.t('userInfo.nlp'),
+        cellp2: i18n.global.t('userInfo.nlpp'),
+        cell3: i18n.global.t('userInfo.cp'),
+        cell3p: i18n.global.t('userInfo.cpp'),
+    },
+    amount: {
+        title: i18n.global.t('userInfo.mfp'),
+        cell1: i18n.global.t('userInfo.ofp'),
+        cell1p: i18n.global.t('userInfo.ofpp'),
+        cell2: i18n.global.t('userInfo.nfp'),
+        cellp2: i18n.global.t('userInfo.nfpp'),
+        cell3: i18n.global.t('userInfo.cp'),
+        cell3p: i18n.global.t('userInfo.cfp'),
+    }
 }
 
 const clickInput = (type) => {
-  console.log(type, strategy[type]);
-  modifyCell.value = strategy[type]
-  console.log(modifyCell.value);
-  isShowSetPassword.value = true
+    modifyCell.value = strategy[type]
+    isShowSetPassword.value = true
 }
 
 </script>

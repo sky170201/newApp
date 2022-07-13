@@ -4,9 +4,6 @@
             <van-icon name="chat-o" @click="openChat" />
         </template>
         <template #title>{{ $t('my.super') }}:{{ userInfo.pid }}</template>
-        <template #right>
-            <SelectLanguage />
-        </template>
     </NavBar>
     <div class="container">
         <div class="account">
@@ -60,7 +57,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { Dialog } from 'vant';
 import NavBar from '@/components/NavBar'
 import router from '@/router'
@@ -77,64 +74,45 @@ import telegram from '@/assets/img/telegram.png'
 import flower from '@/assets/img/flower.png'
 import { isExternal } from '@/utils';
 import { removeSessionStorage } from '@/utils/auth';
+import { getUserInfo } from '@/api/login';
+import { mainStore } from '@/store/mainStore';
+const userInfo = ref({})
 
-const userInfo = reactive({
-    code: '808961',
-    pid: 100000068,
-    username: '723209',
-    avatar: 'https://pic.rmb.bdstatic.com/bjh/b811af55477f31aa6e9415d09f9ddb46.png',
-    uid: 1,
-    money: 5254.58,
-    vip: 'AP1',
-    msg: 0,
-    nickname: '14',
-    usdt: '0.000',
-    set_usdt: 0,
-    set_bank: 1,
-    set_paypwd: 1,
-    set_wdf: 1,
-    set_bkash: 0,
-    set_rocket: 0,
-    tele: 'https://t.me/+KkDXUu6hpR84NDdh',
-    app: 'https://www.gsmedia.cc/app/',
-    sy_money: '23.00',
-    sy_zuori: 0,
-    sy_jinri: 0,
-    sy_benzhou: 0,
-    sy_benyue: 0,
-    sy_shangyue: 0,
-    sy_total: '89.58',
-    sy_finsh: 0,
-    sy_shengyu: 3
+const main = mainStore()
+const appList = ref([])
+const accountList = ref([])
+
+onMounted(async () => {
+    const { result } = await getUserInfo()
+    userInfo.value = result
+    main.setUserInfo(result)
+    accountList.value = [
+        { name: i18n.global.t('my.sy_money'), value: result.sy_money },
+        { name: i18n.global.t('my.sy_zuori'), value: result.sy_zuori },
+        { name: i18n.global.t('my.sy_jinri'), value: result.sy_jinri },
+        { name: i18n.global.t('my.sy_benzhou'), value: result.sy_benzhou },
+        { name: i18n.global.t('my.sy_benyue'), value: result.sy_benyue },
+        { name: i18n.global.t('my.sy_shangyue'), value: result.sy_shangyue },
+        { name: i18n.global.t('my.sy_total'), value: result.sy_total },
+        { name: i18n.global.t('my.sy_finsh'), value: result.sy_finsh },
+        { name: i18n.global.t('my.sy_shengyu'), value: result.sy_shengyu }
+    ]
+    appList.value = [
+        { name: i18n.global.t('my.info'), icon: info, url: '/user/info' },
+        { name: i18n.global.t('my.load'), icon: download, url: result.app },
+        { name: i18n.global.t('my.excel'), icon: excel, url: '/user/report' },
+        { name: i18n.global.t('my.zbjl'), icon: wallet, url: '/user/record' },
+        { name: i18n.global.t('my.invent'), icon: gift, url: '/share' },
+        { name: i18n.global.t('my.team'), icon: team, url: '/user/team' },
+        { name: i18n.global.t('my.help'), icon: help, url: '/help' },
+        { name: i18n.global.t('my.tv'), icon: telegram, url: result.tele }, // 'https://t.me/AP9506'
+        { name: i18n.global.t('my.center'), icon: flower, url: '/user/credit' }
+    ]
 })
 
 const openChat = () => {
     router.push('/notice')
 }
-
-const accountList = [
-    { name: i18n.global.t('my.sy_money'), value: userInfo.sy_money },
-    { name: i18n.global.t('my.sy_zuori'), value: userInfo.sy_zuori },
-    { name: i18n.global.t('my.sy_jinri'), value: userInfo.sy_jinri },
-    { name: i18n.global.t('my.sy_benzhou'), value: userInfo.sy_benzhou },
-    { name: i18n.global.t('my.sy_benyue'), value: userInfo.sy_benyue },
-    { name: i18n.global.t('my.sy_shangyue'), value: userInfo.sy_shangyue },
-    { name: i18n.global.t('my.sy_total'), value: userInfo.sy_total },
-    { name: i18n.global.t('my.sy_finsh'), value: userInfo.sy_finsh },
-    { name: i18n.global.t('my.sy_shengyu'), value: userInfo.sy_shengyu }
-]
-
-const appList = [
-    { name: i18n.global.t('my.info'), icon: info, url: '/user/info' },
-    { name: i18n.global.t('my.load'), icon: download, url: '' },
-    { name: i18n.global.t('my.excel'), icon: excel, url: '/user/report' },
-    { name: i18n.global.t('my.zbjl'), icon: wallet, url: '/user/record' },
-    { name: i18n.global.t('my.invent'), icon: gift, url: '/share' },
-    { name: i18n.global.t('my.team'), icon: team, url: '/user/team' },
-    { name: i18n.global.t('my.help'), icon: help, url: '/help' },
-    { name: i18n.global.t('my.tv'), icon: telegram, url: 'https://t.me/AP9506' },
-    { name: i18n.global.t('my.center'), icon: flower, url: '/user/credit' }
-]
 
 const action = (url) => {
     if (!url) return

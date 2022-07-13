@@ -35,24 +35,25 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div v-if="taskDetail.shenhe_time" class="item">
                 <span class="tit">{{ $t('taskDetail.auditTime') }}：</span>
                 <span class="i">{{ taskDetail.shenhe_time }}</span>
             </div>
         </div>
         <van-form @submit="onSubmit">
-            <van-field v-model="remark" rows="2" autosize :label="$t('taskDetail.backup')" type="textarea"
+            <van-field name="remark" v-model="remark" rows="2" autosize :label="$t('taskDetail.backup')" type="textarea"
                 maxlength="100" :placeholder="$t('taskDetail.backupPlaceholder')" show-word-limit />
             <van-field name="uploader" :label="$t('taskDetail.upload')">
                 <template #input>
-                    <van-uploader v-model="uploader" />
+                    <van-uploader :max-count="1" :after-read="afterRead" v-model="uploader" />
                 </template>
             </van-field>
             <div style="margin: 16px;">
-                <van-button class="border-radius-10" block type="primary" native-type="submit">
+                <van-button :disabled="active !== 'progress'" class="border-radius-10" block type="primary"
+                    native-type="submit">
                     {{ $t('taskDetail.submit') }}
                 </van-button>
-                <van-button class="border-radius-10 mt-40" block type="danger">
+                <van-button @click="cancel" class="border-radius-10 mt-40" block type="danger">
                     {{ $t('taskDetail.cancel') }}
                 </van-button>
             </div>
@@ -65,24 +66,67 @@ import { ref, onMounted } from 'vue'
 import NavBar from "@/components/NavBar";
 import stateImg from '@/assets/img/state4-zh-CN.png'
 import ttImg from '@/assets/img/tiktok.png'
-import { taskDetail } from './data'
+// import { taskDetail } from './data'
 import { copy } from '@/utils'
+import { getTaskDetail, cancelTask, submitUploadFile, uploadFile } from '@/api/home';
+import { useRoute } from 'vue-router';
+import i18n from '@/language/i18n';
+import router from '@/router';
+import { Dialog, Toast } from 'vant';
 
+const route = useRoute()
+const taskDetail = ref({})
+
+const remark = ref('');
+const uploader = ref([]);
+let uploadUrl = null
+
+const active = route.query.active
+
+onMounted(async () => {
+    const { result } = await getTaskDetail({ id: route.query.id })
+    taskDetail.value = result
+    if (result.file) {
+        uploader.value = [{ url: taskDetail.value.file }]
+    }
+})
 const copyLink = (link) => {
     copy(link)
 }
 
-const remark = ref('');
-const uploader = ref([]);
-
-onMounted(() => {
-    uploader.value = [{ url: taskDetail.file }]
-})
-
-const onSubmit = (values) => {
-    console.log('submit', values);
+const afterRead = async (file) => {
+    // 此时可以自行将文件上传至服务器
+    const formData = new FormData()
+    formData.append('pic', file.file)
+    const { result } = await uploadFile(formData)
+    uploadUrl = result
 };
 
+const onSubmit = async (values) => {
+    console.log('submit', values);
+    const { message, code } = await submitUploadFile({
+        id: route.query.id,
+        txt: values.remark,
+        image: uploadUrl
+    })
+    if (code === 200) {
+        Dialog.alert({
+            message: i18n.global.t('task.dialogText'),
+            theme: 'round-button',
+            confirmButtonColor: '#0071e3'
+        }).then(() => {
+            // on close
+            router.push('/task')
+        });
+    }
+};
+
+const cancel = async () => {
+    const { message, code } = await cancelTask({ id: route.query.id })
+    if (code === 500) {
+        Toast(message)
+    }
+}
 </script>
 
 <style scoped lang='less'>

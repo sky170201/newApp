@@ -9,7 +9,7 @@
             <th>{{ $t('report.consumption') }}</th>
             <th>{{ $t('report.date') }}</th>
         </tr>
-        <tr v-for="(item, index) in records.list" :key="index">
+        <tr v-for="(item, index) in records" :key="index">
             <td>{{ item.id }}</td>
             <td><em>{{ item.renwu }}</em></td>
             <td>{{ item.xiaji }}</td>
@@ -24,10 +24,10 @@
 <script setup>
 
 defineProps({
-  records: {
-    type: Object,
-    default: () => ({})
-  }
+    records: {
+        type: Object,
+        default: () => ([])
+    }
 })
 
 </script>

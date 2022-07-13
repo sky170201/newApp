@@ -7,23 +7,25 @@
             <th>{{ $t('wallet.state') }}</th>
             <th>{{ $t('wallet.date') }}</th>
         </tr>
-        <tr v-for="(item, index) in records.list" :key="index">
-            <td>{{ item.money }}</td>
-            <td><em>{{ item.ratio }}</em></td>
-            <td>{{ item.shiji }}</td>
-            <td><em>{{ item.txt }}</em></td>
-            <td>{{ item.times }}</td>
-        </tr>
+        <template v-if="records.length">
+            <tr v-for="(item, index) in records" :key="index">
+                <td>{{ item.money }}</td>
+                <td><em>{{ item.ratio }}</em></td>
+                <td>{{ item.shiji }}</td>
+                <td><em>{{ item.txt }}</em></td>
+                <td>{{ item.times }}</td>
+            </tr>
+        </template>
     </table>
 </template>
 
 <script setup>
 
 defineProps({
-  records: {
-    type: Object,
-    default: () => ({})
-  }
+    records: {
+        type: Object,
+        default: () => ([])
+    }
 })
 
 </script>

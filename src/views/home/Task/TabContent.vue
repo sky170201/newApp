@@ -2,8 +2,9 @@
   <van-empty v-if="!taskList.length" :description="$t('task.noRecord')" />
   <van-pull-refresh v-else :pulling-text="$t('task.pulling')" :loosing-text="$t('task.loosing')"
     :loading-text="$t('task.loading')" v-model="refreshing" @refresh="onRefresh">
-    <van-list :immediate-check="false" v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
-      <van-cell @click="toTaskDetail" v-for="(item, index) in taskList" :key="index">
+    <van-list :immediate-check="false" v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')"
+      @load="onLoad">
+      <van-cell @click="() => toTaskDetail(item.id)" v-for="(item, index) in taskList" :key="index">
         <template #icon>
           <!-- type:4 youtube type:1 tiktok -->
           <div class="cell-img">
@@ -19,12 +20,12 @@
         <template #right-icon>
           <!-- 状态 state:-1 失败 -->
           <div v-if="active === 'progress'" class="progress-right" @click="(e) => e.stopPropagation()">
-          <div class="price">
-            <p>{{$t('taskHall.price')}}</p>
-            <p><span>{{item.price}}</span>EUR</p>
-          </div>
-          <van-uploader :max-count="1" v-model="fileList" preview-size="40" :after-read="afterRead" />
-          <van-button @click="submit(item.id)" size="mini" type="primary">{{$t('taskDetail.submit')}}</van-button>
+            <div class="price">
+              <p>{{ $t('taskHall.price') }}</p>
+              <p><span>{{ item.price }}</span>EUR</p>
+            </div>
+            <van-uploader :max-count="1" v-model="item.fileList" preview-size="40" :after-read="afterRead" />
+            <van-button @click="submit(item)" size="mini" type="primary">{{ $t('taskDetail.submit') }}</van-button>
           </div>
           <div v-else-if="active === 'completed'" class="cell-right">
             <img :src="locale === 'zh' ? state3Zh : state3En">
@@ -71,11 +72,10 @@ const props = defineProps({
 const emits = defineEmits(['update:loading', 'update:finished', 'update:refreshing', 'onLoad', 'onRefresh'])
 
 const locale = proxy.$i18n.locale
-const fileList = ref([])
 let uploadUrl = null
 
-const submit = async (id) => {
-  if (!fileList.value.length) {
+const submit = async ({ id, fileList }) => {
+  if (!fileList.length) {
     Toast(i18n.global.t('taskHall.upload'))
   }
   const { message } = await submitUploadFile({
@@ -94,13 +94,18 @@ const submit = async (id) => {
     });
   }
 }
-const toTaskDetail = () => {
-  router.push('/task-detail')
+const toTaskDetail = (id) => {
+  router.push({
+    path: '/task-detail',
+    query: { id, active: props.active }
+  })
 }
 const onLoad = () => {
+  console.log(104);
   emits('onLoad')
 }
 const onRefresh = () => {
+  console.log(108);
   emits('onRefresh')
 }
 const afterRead = async (file) => {
@@ -132,35 +137,42 @@ const afterRead = async (file) => {
         // height: 100%;
       }
     }
+
     .progress-right {
       margin-left: 20px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+
       .price {
-          display: flex;
-          flex-direction: column;
-          font-size: 24px;
-          line-height: 40px;
-          align-items: flex-end;
-           span {
-              color: #0071e3;
-              font-size: 32px;
-          }
-      }
-      :deep(.van-uploader__upload) {
-        background-color: rgba(247,248,250,.08);
-        .van-icon {
-            background: #fff;
-            overflow: hidden;
-            height: 100%;
-            border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        font-size: 24px;
+        line-height: 40px;
+        align-items: flex-end;
+
+        span {
+          color: #0071e3;
+          font-size: 32px;
         }
       }
+
+      :deep(.van-uploader__upload) {
+        background-color: rgba(247, 248, 250, .08);
+
+        .van-icon {
+          background: #fff;
+          overflow: hidden;
+          height: 100%;
+          border-radius: 5px;
+        }
+      }
+
       .van-button {
-          padding: 0 20px;
+        padding: 0 20px;
       }
     }
+
     .cell-right {
       width: 128px;
 

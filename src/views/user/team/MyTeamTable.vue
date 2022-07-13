@@ -1,12 +1,9 @@
 <template>
     <table width="100%">
         <tr>
-            <th
-                v-for="(item, index) in tableTh"
-                :key="index"
-            >{{item.title}}</th>
+            <th v-for="(item, index) in tableTh" :key="index">{{ item.title }}</th>
         </tr>
-        <tr v-for="(item, index) in teamData.list" :key="index">
+        <tr v-for="(item, index) in teamData" :key="index">
             <td>{{ item.id }}</td>
             <td><em>{{ item.level }}</em></td>
             <td>{{ item.num }}</td>
@@ -16,19 +13,15 @@
 
 <script setup>
 import i18n from '@/language/i18n'
-import { teamData } from './data'
-
-defineProps({
-  list: {
-    type: Object,
-    default: () => ([])
-  }
-})
+import { inject } from 'vue';
+// import { teamData } from './data'
+const teamData = inject('teamList')
+console.log('teamData', teamData);
 
 const tableTh = [
-  { title: i18n.global.t('team.table2Th1') },
-  { title: i18n.global.t('team.table2Th2') },
-  { title: i18n.global.t('team.table2Th3') }
+    { title: i18n.global.t('team.table2Th1') },
+    { title: i18n.global.t('team.table2Th2') },
+    { title: i18n.global.t('team.table2Th3') }
 ]
 
 </script>

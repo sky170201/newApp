@@ -1,45 +1,29 @@
 <template>
-    <NavBar :isCusLeft="true">
-        <template #title>{{$t('task.title')}}</template>
-    </NavBar>
-    <van-tabs v-model:active="initData.active" sticky @click-tab="onClickTab" swipeable>
-        <van-tab :title="`${$t('task.progress')}(${initData.process})`" name="progress">
-          <TabContent
-            @onRefresh="onRefresh"
-            @onLoad="onLoad"
-            v-model:loading="initData.loading"
-            v-model:finished="initData.finished"
-            v-model:refreshing="initData.refreshing"
-            :taskList="initData.taskList" :active="initData.active" />
-        </van-tab>
-        <van-tab :title="`${$t('task.review')}(${initData.check})`" name="review">
-          <TabContent
-            @onRefresh="onRefresh"
-            @onLoad="onLoad"
-            v-model:loading="initData.loading"
-            v-model:finished="initData.finished"
-            v-model:refreshing="initData.refreshing"
-            :taskList="initData.taskList" :active="initData.active" />
-        </van-tab>
-        <van-tab :title="`${$t('task.completed')}(${initData.finsh})`" name="completed">
-          <TabContent
-            @onRefresh="onRefresh"
-            @onLoad="onLoad"
-            v-model:loading="initData.loading"
-            v-model:finished="initData.finished"
-            v-model:refreshing="initData.refreshing"
-            :taskList="initData.taskList" :active="initData.active" />
-        </van-tab>
-        <van-tab :title="`${$t('task.failed')}(${initData.cancel})`" name="failed">
-          <TabContent
-            @onRefresh="onRefresh"
-            @onLoad="onLoad"
-            v-model:loading="initData.loading"
-            v-model:finished="initData.finished"
-            v-model:refreshing="initData.refreshing"
-            :taskList="initData.taskList" :active="initData.active" />
-        </van-tab>
-    </van-tabs>
+  <NavBar :isCusLeft="true">
+    <template #title>{{ $t('task.title') }}</template>
+  </NavBar>
+  <van-tabs v-model:active="initData.active" sticky @click-tab="onClickTab" swipeable>
+    <van-tab :title="`${$t('task.progress')}(${initData.process})`" name="progress">
+      <TabContent v-if="initData.active === 'progress'" @onRefresh="onRefresh" @onLoad="onLoad"
+        v-model:loading="initData.loading" v-model:finished="initData.finished" v-model:refreshing="initData.refreshing"
+        :taskList="initData.taskList" :active="initData.active" />
+    </van-tab>
+    <van-tab :title="`${$t('task.review')}(${initData.check})`" name="review">
+      <TabContent v-if="initData.active === 'review'" @onRefresh="onRefresh" @onLoad="onLoad"
+        v-model:loading="initData.loading" v-model:finished="initData.finished" v-model:refreshing="initData.refreshing"
+        :taskList="initData.taskList" :active="initData.active" />
+    </van-tab>
+    <van-tab :title="`${$t('task.completed')}(${initData.finsh})`" name="completed">
+      <TabContent v-if="initData.active === 'completed'" @onRefresh="onRefresh" @onLoad="onLoad"
+        v-model:loading="initData.loading" v-model:finished="initData.finished" v-model:refreshing="initData.refreshing"
+        :taskList="initData.taskList" :active="initData.active" />
+    </van-tab>
+    <van-tab :title="`${$t('task.failed')}(${initData.cancel})`" name="failed">
+      <TabContent v-if="initData.active === 'failed'" @onRefresh="onRefresh" @onLoad="onLoad"
+        v-model:loading="initData.loading" v-model:finished="initData.finished" v-model:refreshing="initData.refreshing"
+        :taskList="initData.taskList" :active="initData.active" />
+    </van-tab>
+  </van-tabs>
 </template>
 
 <script setup>
@@ -84,17 +68,18 @@ const _getTaskRecordList = async (flag) => {
     status: statusMap[initData.active],
     page: initData.page
   })
+  result.list.forEach((item) => (item.fileList = []))
   if (flag) {
     initData.taskList.push(...result.list)
-    initData.loading = false
   } else {
     initData.process = result.process
     initData.check = result.check
     initData.finsh = result.finsh
     initData.cancel = result.cancel
     initData.taskList = result.list
-    initData.refreshing = false
   }
+  initData.refreshing = false
+  initData.loading = false
   if (initData.page === result.page) {
     initData.finished = true
   }
@@ -117,10 +102,11 @@ const onLoad = () => {
 
 <style scoped lang='less'>
 .van-tabs {
-    // height: calc(100% - 192px);
-    // overflow: auto;
-    :deep(.van-tabs__content) {
-        background: #0e1526 !important;
-    }
+
+  // height: calc(100% - 192px);
+  // overflow: auto;
+  :deep(.van-tabs__content) {
+    background: #0e1526 !important;
+  }
 }
 </style>

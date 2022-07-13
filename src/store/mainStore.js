@@ -26,6 +26,10 @@ export const mainStore = defineStore("main", {
     updateShow(bool) {
       this.show = bool;
     },
+    // 设置用户信息
+    setUserInfo(user) {
+      this.user = user;
+    },
     // 登录请求
     async getLogin(data) {
       return new Promise(async (resolve) => {
@@ -38,7 +42,7 @@ export const mainStore = defineStore("main", {
             this.token = token;
             setSessionStorage("TOKEN", token);
             const user = await getUserInfo();
-            this.user = user.result;
+            this.setUserInfo(user.result);
             router.push("/");
           }
           resolve();

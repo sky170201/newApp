@@ -56,6 +56,6 @@ export const records = {
 };
 
 export const withdrawalMethodList = [
-  { text: "USDT(1USDT = 0.98EUR)", name: "USDT" },
-  { text: "BANK", name: "BANK" },
+  { text: "USDT(1USDT = 0.98EUR)", name: "1" },
+  { text: "BANK", name: "2" },
 ];

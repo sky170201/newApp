@@ -1,37 +1,40 @@
 <template>
-  <van-grid :gutter="1" :column-num="2">
-      <van-grid-item v-for="(item, index) in reportList" :key="index">
-          <template #default>
-              <div class="title">{{item.name}}</div>
-              <div class="value">{{item.value}}</div>
-          </template>
-      </van-grid-item>
-  </van-grid>
-  <div class="line"></div>
-  <van-tabs @click-tab="onClickTab" v-model:active="active" swipeable>
-      <van-tab :title="$t('team.tab11')"><TeamReportTable /></van-tab>
-      <van-tab :title="$t('team.tab12')"><TeamReportTable /></van-tab>
-      <van-tab :title="$t('team.tab13')"><TeamReportTable /></van-tab>
-  </van-tabs>
+    <van-grid :gutter="1" :column-num="2">
+        <van-grid-item v-for="(item, index) in reportList" :key="index">
+            <template #default>
+                <div class="title">{{ item.name }}</div>
+                <div class="value">{{ item.value }}</div>
+            </template>
+        </van-grid-item>
+    </van-grid>
+    <div class="line"></div>
+    <van-tabs @click-tab="onClickTab" v-model:active="active" swipeable>
+        <van-tab :title="$t('team.tab11')">
+            <TeamReportTable />
+        </van-tab>
+        <van-tab :title="$t('team.tab12')">
+            <TeamReportTable />
+        </van-tab>
+        <van-tab :title="$t('team.tab13')">
+            <TeamReportTable />
+        </van-tab>
+    </van-tabs>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import i18n from '@/language/i18n'
-import { teamData } from './data'
+// import { teamData } from './data'
 import TeamReportTable from './TeamReportTable.vue'
 
+defineProps({
+    reportList: {
+        type: Array,
+        default: () => ([])
+    }
+})
 const active = ref(0)
-const reportList = [
-  { name: `${i18n.global.t('team.ttb')}`, value: teamData.team_ye },
-  { name: `${i18n.global.t('team.ttf')}`, value: teamData.team_ls },
-  { name: `${i18n.global.t('team.ttr')}`, value: teamData.team_cz },
-  { name: `${i18n.global.t('team.ttco')}`, value: teamData.team_tx },
-  { name: `${i18n.global.t('team.nofc')}`, value: teamData.team_sc },
-  { name: `${i18n.global.t('team.dpn')}`, value: teamData.team_zt },
-  { name: `${i18n.global.t('team.ts')}`, value: teamData.team_td },
-  { name: `${i18n.global.t('team.np')}`, value: teamData.team_day },
-]
+
+const onClickTab = () => { }
 
 </script>
 
