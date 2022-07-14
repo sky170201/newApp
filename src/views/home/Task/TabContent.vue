@@ -101,11 +101,9 @@ const toTaskDetail = (id) => {
   })
 }
 const onLoad = () => {
-  console.log(104);
   emits('onLoad')
 }
 const onRefresh = () => {
-  console.log(108);
   emits('onRefresh')
 }
 const afterRead = async (file) => {

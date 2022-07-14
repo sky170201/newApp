@@ -1,5 +1,5 @@
 <template>
-  <van-list v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
+  <van-list :immediate-check="false" v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
       <div v-for="(item, index) in recordList" :key="index" class="item">
           <div class="i">
               <p>
@@ -16,8 +16,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { recordData } from './data'
+// import { ref } from 'vue'
+// import { recordData } from './data'
 
 // active: income->#07c160; thaw->; expenditure->#ff976a; recharge->#7232dd
 const typeColor = {
@@ -26,39 +26,48 @@ const typeColor = {
   expenditure: '#ff976a',
   recharge: '#7232dd'
 }
+// const recordList = ref(recordData.list)
+// const loading = ref(false);
+// const finished = ref(false);
 const props = defineProps({
+  recordList: {
+    type: Array,
+    default: () => ([])
+  },
   active: {
     type: String,
-    defualt: ''
-  }
+    default: ''
+  },
+  loading: Boolean,
+  finished: Boolean,
 })
-
-const recordList = ref(recordData.list)
-
-const loading = ref(false);
-const finished = ref(false);
+const emits = defineEmits(['update:loading', 'update:finished', 'onLoad', 'onRefresh'])
 
 const onLoad = () => {
-  // 异步更新数据
-  // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-  setTimeout(() => {
-    for (let i = 0; i < 5; i++) {
-      recordList.value.push({
-        money: "5.00",
-        txt: "Invite rewards",
-        times: "2022-05-24",
-      });
-    }
+  emits('onLoad')
+}
 
-    // 加载状态结束
-    loading.value = false;
+// const onLoad = () => {
+// 异步更新数据
+// setTimeout 仅做示例，真实场景中一般为 ajax 请求
+// setTimeout(() => {
+//   for (let i = 0; i < 5; i++) {
+//     recordList.value.push({
+//       money: "5.00",
+//       txt: "Invite rewards",
+//       times: "2022-05-24",
+//     });
+//   }
 
-    // 数据全部加载完成
-    if (recordList.value.length >= 40) {
-      finished.value = true;
-    }
-  }, 1000);
-};
+//   // 加载状态结束
+//   loading.value = false;
+
+//   // 数据全部加载完成
+//   if (recordList.value.length >= 40) {
+//     finished.value = true;
+//   }
+// }, 1000);
+// };
 
 </script>
 
