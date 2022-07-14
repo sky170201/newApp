@@ -69,7 +69,6 @@ const columns = ref([])
 
 onMounted(async () => {
   const res = await getAreasCode()
-  console.log(res);
   columns.value = res.result.list
 })
 const store = mainStore()

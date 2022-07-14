@@ -10,6 +10,15 @@ export function login(data) {
   });
 }
 
+/* 注册 */
+export function register(data) {
+  return request({
+    method: "post",
+    url: "/api/init/reg",
+    data,
+  });
+}
+
 /* 获取用户信息 */
 export function getUserInfo() {
   return request({

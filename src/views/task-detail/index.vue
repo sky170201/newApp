@@ -4,7 +4,7 @@
     </NavBar>
     <div class="top-100 task-detail">
         <div class="state">
-            <van-image width="60" :src="stateImg"></van-image>
+            <van-image width="60" :src="stateImgMap[active][lang]"></van-image>
         </div>
         <div class="info">
             <div class="item">
@@ -62,9 +62,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, getCurrentInstance } from 'vue'
 import NavBar from "@/components/NavBar";
-import stateImg from '@/assets/img/state4-zh-CN.png'
 import ttImg from '@/assets/img/tiktok.png'
 // import { taskDetail } from './data'
 import { copy } from '@/utils'
@@ -74,6 +73,8 @@ import i18n from '@/language/i18n';
 import router from '@/router';
 import { Dialog, Toast } from 'vant';
 
+import { stateImgMap } from '@/views/common/data/taskStateImgMap.js'
+
 const route = useRoute()
 const taskDetail = ref({})
 
@@ -82,6 +83,8 @@ const uploader = ref([]);
 let uploadUrl = null
 
 const active = route.query.active
+const { proxy } = getCurrentInstance()
+const lang = proxy.$i18n.locale
 
 onMounted(async () => {
     const { result } = await getTaskDetail({ id: route.query.id })
@@ -169,7 +172,11 @@ const cancel = async () => {
         }
     }
 
-    .van-form {}
+    .van-form {
+        :deep(textarea) {
+            color: #fff;
+        }
+    }
 
     :deep(.van-uploader__upload) {
         width: 200px;

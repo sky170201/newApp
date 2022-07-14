@@ -12,8 +12,8 @@
     <van-form @submit="onSubmit">
       <van-row>
         <van-col span="9">
-          <van-field class="area-code" v-model="areaCode" left-icon="manager" label="+" type="text"
-            :placeholder="$t('login.areaCode')" />
+          <van-field @click-input="clickInput" class="area-code" v-model="areaCode" left-icon="manager" label="+"
+            type="text" :placeholder="$t('login.areaCode')" />
         </van-col>
         <van-col span="15">
           <van-field clearable v-model="phone" :placeholder="$t('register.phone')" />
@@ -21,7 +21,7 @@
       </van-row>
       <van-row align="center" justify="space-around">
         <van-col span="18">
-          <van-field class="code" clearable v-model="areaCode" left-icon="phone" type="text"
+          <van-field class="code" clearable v-model="verifyCode" left-icon="phone" type="text"
             :placeholder="$t('register.code')" />
         </van-col>
         <van-col span="6">
@@ -31,59 +31,103 @@
       <van-field v-model="password" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
         :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
         :placeholder="$t('register.password1')" />
-      <van-field v-model="password" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
+      <van-field v-model="confirmPassword" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
         :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
         :placeholder="$t('register.password2')" />
-      <van-field v-model="password" clearable left-icon="lock" :placeholder="$t('register.inventCode')" />
+      <van-field v-model="inventCode" clearable left-icon="lock" :placeholder="$t('register.inventCode')" />
       <div style="margin: 16px;">
-        <van-button block type="primary" native-type="submit">
+        <van-button :loading="isLoading" block type="primary" native-type="submit">
           {{ $t('register.submit') }}
         </van-button>
       </div>
     </van-form>
   </div>
   <Online />
+  <van-popup v-model:show="showPicker" round position="bottom">
+    <van-picker :columns="columns" :columns-field-names="customFieldName" @cancel="showPicker = false"
+      @confirm="onConfirm">
+      <!-- 自定义内容选项，作用域插槽 -->
+      <template #option="option">
+        <div class="custom-option">
+          {{ option.name }} ——— {{ option.code }}
+        </div>
+      </template>
+    </van-picker>
+  </van-popup>
 </template>
-<!-- 登录路由组件 -->
 <script setup>
-/* 在setup中使用访问路由 */
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-// import { useI18n } from 'vue-i18n'
+import router from '@/router'
+import { ref, onMounted } from 'vue'
+import { Toast } from 'vant'
 
 import NavBar from '@/components/NavBar'
 import SelectLanguage from '@/views/common/SelectLanguage'
 import Online from '@/views/common/Online'
 
 import { mainStore } from '@/store/mainStore.js'
-// import { getLoginUser } from '@/api/homeApi.js'
+import i18n from '@/language/i18n'
+import { getAreasCode } from '@/api/getStaticDataApi';
+import { register } from '@/api/login';
 const store = mainStore()
-const router = useRouter()
 
+const isLoading = ref(false)
 const areaCode = ref('')
 const phone = ref('')
+const verifyCode = ref('')
 const password = ref('')
+const confirmPassword = ref('')
+const inventCode = ref('')
+const isPassword = ref(false)
+const showPicker = ref(false)
+
+const columns = ref([])
+const customFieldName = {
+  text: 'code',
+}
+onMounted(async () => {
+  const res = await getAreasCode()
+  columns.value = res.result.list
+})
+const onConfirm = ({ code, name }) => {
+  areaCode.value = code
+  showPicker.value = false
+}
+
+const clickInput = (e) => {
+  e.target.blur() // 阻止input获取焦点
+  showPicker.value = true
+}
+
+const clickRightIcon = () => {
+  isPassword.value = !isPassword.value
+}
 
 const onSubmit = async () => {
-  router.push('/')
-  return
-  const res = await store.getLogin({ phone: phone.value, password: password.value })
-  console.log(res)
-  if (res.data.code === 200) {
-    // 将用户登录状态传过去
-    store.udpateIsLogin(true)
-    // 将用户id传到发起获取用户详情的接口
-    const result = await getLoginUser(res.data.account.id)
-    console.log('获取用户详情返回的数据:', result)
-    // 将后端返回来的token传去pinia和本地存储
-    store.updateToken(res.data.token)
-    // 将用户详情数据存储到pinia和本地存储
-    store.updateUser(result)
-    // 如果返回的code为200，说明登录成功，跳转个人中心页面
-    router.push('/infoUser')
+  isLoading.value = true
+  if (areaCode.value === '') {
+    Toast(i18n.global.t('login.areaCodeP'));
+  } else if (phone.value === '') {
+    Toast(i18n.global.t('register.phone'));
+  } else if (verifyCode.value === '') {
+    Toast(i18n.global.t('register.code'));
+  } else if (password.value === '') {
+    Toast(i18n.global.t('register.password1'));
+  } else if (confirmPassword.value === '') {
+    Toast(i18n.global.t('register.password2'));
+  } else if (password.value !== confirmPassword.value) {
+    Toast(i18n.global.t('register.validTwo'));
+  } else if (inventCode.value === '') {
+    Toast(i18n.global.t('register.inventCode'));
   } else {
-    alert('手机号码或密码错误！')
+    // await store.register({
+    // password: 123
+    // ltc: 1
+    // phone: 123
+    // code: 1935
+    // })
   }
+  isLoading.value = false
+  // router.push('/')
 }
 </script>
 <style lang='less' scoped>
@@ -118,6 +162,19 @@ const onSubmit = async () => {
       }
     }
   }
+}
 
+.van-popup {
+  .van-picker {
+    background-color: #151d31;
+
+    :deep(.van-picker__columns) {
+      .van-picker-column__item {
+        .custom-option {
+          font-size: 32px;
+        }
+      }
+    }
+  }
 }
 </style>

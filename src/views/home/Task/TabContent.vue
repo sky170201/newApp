@@ -27,11 +27,8 @@
             <van-uploader :max-count="1" v-model="item.fileList" preview-size="40" :after-read="afterRead" />
             <van-button @click="submit(item)" size="mini" type="primary">{{ $t('taskDetail.submit') }}</van-button>
           </div>
-          <div v-else-if="active === 'completed'" class="cell-right">
-            <img :src="locale === 'zh' ? state3Zh : state3En">
-          </div>
-          <div v-else-if="active === 'failed'" class="cell-right">
-            <img :src="locale === 'zh' ? state4Zh : state4En">
+          <div v-else class="cell-right">
+            <img :src="stateImgMap[active][locale]">
           </div>
         </template>
       </van-cell>
@@ -45,16 +42,11 @@ import router from '@/router';
 // import { data } from './data'
 import youtube from '@/assets/img/youtube.png'
 import tiktok from '@/assets/img/tiktok.png'
-
-import state4Zh from '@/assets/img/state4-zh-CN.png'
-import state4En from '@/assets/img/state4-en-US.png'
-import state3Zh from '@/assets/img/state3-zh-CN.png'
-import state3En from '@/assets/img/state3-en-US.png'
 import { uploadFile, submitUploadFile } from '@/api/home';
 import { Dialog, Toast } from 'vant';
 import i18n from '@/language/i18n';
+import { stateImgMap } from '@/views/common/data/taskStateImgMap.js'
 
-const { proxy } = getCurrentInstance()
 const props = defineProps({
   taskList: {
     type: Array,
@@ -68,15 +60,20 @@ const props = defineProps({
   finished: Boolean,
   refreshing: Boolean,
 })
+const { proxy } = getCurrentInstance()
+const locale = proxy.$i18n.locale
+const active = props.active
+
+console.log(stateImgMap[active][locale]);
 
 const emits = defineEmits(['update:loading', 'update:finished', 'update:refreshing', 'onLoad', 'onRefresh'])
 
-const locale = proxy.$i18n.locale
 let uploadUrl = null
 
 const submit = async ({ id, fileList }) => {
   if (!fileList.length) {
     Toast(i18n.global.t('taskHall.upload'))
+    return
   }
   const { message } = await submitUploadFile({
     id,

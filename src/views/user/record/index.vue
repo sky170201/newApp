@@ -1,21 +1,27 @@
 <template>
-    <div class="record">
-        <NavBar>
-            <template #title>{{title}}</template>
-        </NavBar>
-        <van-tabs @click-tab="onClickTab" v-model:active="initData.active" swipeable>
-            <van-tab name="income" :title="$t('record.income.name')"></van-tab>
-            <van-tab name="thaw" :title="$t('record.thaw.name')"></van-tab>
-            <van-tab name="expenditure" :title="$t('record.expenditure.name')"></van-tab>
-            <van-tab name="recharge" :title="$t('record.recharge.name')"></van-tab>
-        </van-tabs>
-        <List
-            @onLoad="onLoad"
-            v-model:loading="initData.loading"
-            v-model:finished="initData.finished"
-            :recordList="initData.recordList"
-            :active="initData.active" />
-    </div>
+  <div class="record">
+    <NavBar>
+      <template #title>{{ title }}</template>
+    </NavBar>
+    <van-tabs @click-tab="onClickTab" v-model:active="initData.active" swipeable>
+      <van-tab name="income" :title="$t('record.income.name')">
+        <List v-if="initData.active === 'income'" @onLoad="onLoad" v-model:loading="initData.loading"
+          v-model:finished="initData.finished" :recordList="initData.recordList" :active="initData.active" />
+      </van-tab>
+      <van-tab name="thaw" :title="$t('record.thaw.name')">
+        <List v-if="initData.active === 'thaw'" @onLoad="onLoad" v-model:loading="initData.loading"
+          v-model:finished="initData.finished" :recordList="initData.recordList" :active="initData.active" />
+      </van-tab>
+      <van-tab name="expenditure" :title="$t('record.expenditure.name')">
+        <List v-if="initData.active === 'expenditure'" @onLoad="onLoad" v-model:loading="initData.loading"
+          v-model:finished="initData.finished" :recordList="initData.recordList" :active="initData.active" />
+      </van-tab>
+      <van-tab name="recharge" :title="$t('record.recharge.name')">
+        <List v-if="initData.active === 'recharge'" @onLoad="onLoad" v-model:loading="initData.loading"
+          v-model:finished="initData.finished" :recordList="initData.recordList" :active="initData.active" />
+      </van-tab>
+    </van-tabs>
+  </div>
 </template>
 
 <script setup>
@@ -82,38 +88,38 @@ const onLoad = () => {
 
 <style scoped lang="less">
 .record {
-    height: 100%;
+  height: 100%;
 
-    .van-list {
-        height: calc(100% - 180px);
-        overflow: auto;
+  .van-list {
+    height: calc(100% - 180px);
+    overflow: auto;
 
-        .item {
-            display: flex;
-            padding: 30px;
-            background-color: #151d31;
-            border-bottom: 3px solid #0e1526;
+    .item {
+      display: flex;
+      padding: 30px;
+      background-color: #151d31;
+      border-bottom: 3px solid #0e1526;
 
-            .i {
-                flex: 1;
-                font-size: 30px;
+      .i {
+        flex: 1;
+        font-size: 30px;
 
-                .amount {
-                    color: @mainColor;
-                    font-size: 32px;
-                    font-weight: 700;
-                }
-
-                span {
-                    font-size: 30px;
-                }
-
-                .van-tag {
-                    font-size: 24px;
-                    margin-right: 24px;
-                }
-            }
+        .amount {
+          color: @mainColor;
+          font-size: 32px;
+          font-weight: 700;
         }
+
+        span {
+          font-size: 30px;
+        }
+
+        .van-tag {
+          font-size: 24px;
+          margin-right: 24px;
+        }
+      }
     }
+  }
 }
 </style>

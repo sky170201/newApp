@@ -1,17 +1,19 @@
 <template>
-  <van-list :immediate-check="false" v-model:loading="loading" :finished="finished" :finished-text="$t('task.noMore')" @load="onLoad">
-      <div v-for="(item, index) in recordList" :key="index" class="item">
-          <div class="i">
-              <p>
-                  <van-tag :color="typeColor[active]">{{$t(`record.${active}.name`)}}</van-tag>
-                  {{ item.txt }}
-              </p>
-              <div class="flex justify-between align-end mt-10">
-                  <span class="amount">{{ item.money }}</span>
-                  <span>{{ item.times }}</span>
-              </div>
-          </div>
+  <van-empty v-if="!recordList.length" :description="$t('task.noRecord')" />
+  <van-list v-else :immediate-check="false" v-model:loading="loading" :finished="finished"
+    :finished-text="$t('task.noMore')" @load="onLoad">
+    <div v-for="(item, index) in recordList" :key="index" class="item">
+      <div class="i">
+        <p>
+          <van-tag :color="typeColor[active]">{{ $t(`record.${active}.name`) }}</van-tag>
+          {{ item.txt }}
+        </p>
+        <div class="flex justify-between align-end mt-10">
+          <span class="amount">{{ item.money }}</span>
+          <span>{{ item.times }}</span>
+        </div>
       </div>
+    </div>
   </van-list>
 </template>
 
@@ -47,60 +49,38 @@ const onLoad = () => {
   emits('onLoad')
 }
 
-// const onLoad = () => {
-// 异步更新数据
-// setTimeout 仅做示例，真实场景中一般为 ajax 请求
-// setTimeout(() => {
-//   for (let i = 0; i < 5; i++) {
-//     recordList.value.push({
-//       money: "5.00",
-//       txt: "Invite rewards",
-//       times: "2022-05-24",
-//     });
-//   }
-
-//   // 加载状态结束
-//   loading.value = false;
-
-//   // 数据全部加载完成
-//   if (recordList.value.length >= 40) {
-//     finished.value = true;
-//   }
-// }, 1000);
-// };
-
 </script>
 
 <style scoped lang="less">
 .van-list {
-    height: calc(100% - 180px);
-    overflow: auto;
+  height: calc(100% - 180px);
+  overflow: auto;
 
-    .item {
-        display: flex;
-        padding: 30px;
-        background-color: #151d31;
-        border-bottom: 3px solid #0e1526;
+  .item {
+    display: flex;
+    padding: 30px;
+    background-color: #151d31;
+    border-bottom: 3px solid #0e1526;
 
-        .i {
-            flex: 1;
-            font-size: 30px;
+    .i {
+      flex: 1;
+      font-size: 30px;
 
-            .amount {
-                color: @mainColor;
-                font-size: 32px;
-                font-weight: 700;
-            }
+      .amount {
+        color: @mainColor;
+        font-size: 32px;
+        font-weight: 700;
+      }
 
-            span {
-                font-size: 30px;
-            }
+      span {
+        font-size: 30px;
+      }
 
-            .van-tag {
-                font-size: 24px;
-                margin-right: 24px;
-            }
-        }
+      .van-tag {
+        font-size: 24px;
+        margin-right: 24px;
+      }
     }
+  }
 }
 </style>

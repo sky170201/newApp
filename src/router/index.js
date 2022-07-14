@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Layout from "@/layout";
 import User from "@/views/user";
-import { getSessionStorage } from "@/utils/auth";
 const routes = [
   {
     path: "/",
@@ -161,20 +160,4 @@ const router = createRouter({
   routes,
 });
 
-// 全局前置守卫
-router.beforeEach((to, from, next) => {
-  const hasToken = getSessionStorage("TOKEN");
-  console.log("hasToken", hasToken);
-  if (to.path === "/login") {
-    next();
-  } else if (!hasToken) {
-    next("/login");
-  } else {
-    next();
-  }
-});
-
-// router.afterEach(() => {
-
-// })
 export default router;

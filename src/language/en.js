@@ -1,7 +1,7 @@
 export default {
   selectLang: "Language",
   article: {
-    title: 'Details'
+    title: "Details",
   },
   login: {
     title: "Login in",
@@ -21,6 +21,7 @@ export default {
     btnCode: "Send code",
     password1: "Please enter your password",
     password2: "Please confirm your password",
+    validTwo: "The two passwords do not match",
     inventCode: "Please enter the invitation code",
     submit: "Sign up",
   },
@@ -89,7 +90,7 @@ export default {
   hall: {
     taskName: "Daily tasks",
     level: "Current level",
-    noLevel: "Your level is not enough"
+    noLevel: "Your level is not enough",
   },
   taskHall: {
     // title: 'Business Hall'
@@ -98,14 +99,15 @@ export default {
     level: "Level",
     btnText: "Reveive",
     price: "Price",
-    upload: 'Please upload screenshot'
+    upload: "Please upload screenshot",
+    receiveTxt: "Received successfully",
   },
   vipPay: {
     title: "Payment method",
     online: "Online service",
     description: "Fast and convenient",
-    noMoney: 'Insufficient balance',
-    address: 'deposit address'
+    noMoney: "Insufficient balance",
+    address: "deposit address",
   },
   level: {
     btnName: "Join now",
@@ -125,7 +127,7 @@ export default {
     pulling: "Drop down to refresh...",
     loosing: "Free to refresh...",
     loading: "loading...",
-    dialogText: "Submitted successfully"
+    dialogText: "Submitted successfully",
   },
   my: {
     super: "My superior",

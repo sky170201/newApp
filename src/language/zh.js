@@ -1,7 +1,7 @@
 export default {
   selectLang: "选择语言",
   article: {
-    title: '详情'
+    title: "详情",
   },
   login: {
     title: "登录",
@@ -21,6 +21,7 @@ export default {
     btnCode: "发送验证码",
     password1: "请输入登录密码",
     password2: "请确认你的密码",
+    validTwo: "两次密码不一致",
     inventCode: "请输入邀请码",
     submit: "立即注册",
   },
@@ -89,7 +90,7 @@ export default {
   hall: {
     taskName: "每日任务数",
     level: "当前等级",
-    noLevel: '您的等级不足'
+    noLevel: "您的等级不足",
   },
   taskHall: {
     // title: '任务大厅'
@@ -98,14 +99,15 @@ export default {
     level: "级别",
     btnText: "领取",
     price: "单价",
-    upload: '请上传截图'
+    upload: "请上传截图",
+    receiveTxt: "领取成功",
   },
   vipPay: {
     title: "支付方式",
     online: "在线客服",
     description: "快捷方便",
-    noMoney: '余额不足',
-    address: '充值地址'
+    noMoney: "余额不足",
+    address: "充值地址",
   },
   level: {
     btnName: "立即加入",
@@ -125,7 +127,7 @@ export default {
     pulling: "下拉即可刷新...",
     loosing: "释放即可刷新...",
     loading: "加载中...",
-    dialogText: '提交成功'
+    dialogText: "提交成功",
   },
   my: {
     super: "我的上级",
