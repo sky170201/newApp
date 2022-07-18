@@ -54,12 +54,14 @@
             </van-grid-item>
         </van-grid>
     </div>
+    <Loading v-if="isLoading" />
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { Dialog } from 'vant';
 import NavBar from '@/components/NavBar'
+import Loading from '@/components/Loading'
 import router from '@/router'
 import i18n from '@/language/i18n'
 
@@ -82,32 +84,39 @@ const main = mainStore()
 const appList = ref([])
 const accountList = ref([])
 
+const isLoading = ref(false)
 onMounted(async () => {
-    const { result } = await getUserInfo()
-    userInfo.value = result
-    main.setUserInfo(result)
-    accountList.value = [
-        { name: i18n.global.t('my.sy_money'), value: result.sy_money },
-        { name: i18n.global.t('my.sy_zuori'), value: result.sy_zuori },
-        { name: i18n.global.t('my.sy_jinri'), value: result.sy_jinri },
-        { name: i18n.global.t('my.sy_benzhou'), value: result.sy_benzhou },
-        { name: i18n.global.t('my.sy_benyue'), value: result.sy_benyue },
-        { name: i18n.global.t('my.sy_shangyue'), value: result.sy_shangyue },
-        { name: i18n.global.t('my.sy_total'), value: result.sy_total },
-        { name: i18n.global.t('my.sy_finsh'), value: result.sy_finsh },
-        { name: i18n.global.t('my.sy_shengyu'), value: result.sy_shengyu }
-    ]
-    appList.value = [
-        { name: i18n.global.t('my.info'), icon: info, url: '/user/info' },
-        { name: i18n.global.t('my.load'), icon: download, url: result.app },
-        { name: i18n.global.t('my.excel'), icon: excel, url: '/user/report' },
-        { name: i18n.global.t('my.zbjl'), icon: wallet, url: '/user/record' },
-        { name: i18n.global.t('my.invent'), icon: gift, url: '/share' },
-        { name: i18n.global.t('my.team'), icon: team, url: '/user/team' },
-        { name: i18n.global.t('my.help'), icon: help, url: '/help' },
-        { name: i18n.global.t('my.tv'), icon: telegram, url: result.tele }, // 'https://t.me/AP9506'
-        { name: i18n.global.t('my.center'), icon: flower, url: '/user/credit' }
-    ]
+    try {
+        isLoading.value = true
+        const { result } = await getUserInfo()
+        userInfo.value = result
+        main.setUserInfo(result)
+        accountList.value = [
+            { name: i18n.global.t('my.sy_money'), value: result.sy_money },
+            { name: i18n.global.t('my.sy_zuori'), value: result.sy_zuori },
+            { name: i18n.global.t('my.sy_jinri'), value: result.sy_jinri },
+            { name: i18n.global.t('my.sy_benzhou'), value: result.sy_benzhou },
+            { name: i18n.global.t('my.sy_benyue'), value: result.sy_benyue },
+            { name: i18n.global.t('my.sy_shangyue'), value: result.sy_shangyue },
+            { name: i18n.global.t('my.sy_total'), value: result.sy_total },
+            { name: i18n.global.t('my.sy_finsh'), value: result.sy_finsh },
+            { name: i18n.global.t('my.sy_shengyu'), value: result.sy_shengyu }
+        ]
+        appList.value = [
+            { name: i18n.global.t('my.info'), icon: info, url: '/user/info' },
+            { name: i18n.global.t('my.load'), icon: download, url: result.app },
+            { name: i18n.global.t('my.excel'), icon: excel, url: '/user/report' },
+            { name: i18n.global.t('my.zbjl'), icon: wallet, url: '/user/record' },
+            { name: i18n.global.t('my.invent'), icon: gift, url: '/share' },
+            { name: i18n.global.t('my.team'), icon: team, url: '/user/team' },
+            { name: i18n.global.t('my.help'), icon: help, url: '/help' },
+            { name: i18n.global.t('my.tv'), icon: telegram, url: result.tele }, // 'https://t.me/AP9506'
+            { name: i18n.global.t('my.center'), icon: flower, url: '/user/credit' }
+        ]
+        isLoading.value = false
+    } catch (error) {
+        isLoading.value = false
+    }
 })
 
 const openChat = () => {

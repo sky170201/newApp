@@ -45,10 +45,12 @@ import {
   Steps,
   Grid,
   GridItem,
-  Circle
+  Circle,
+  Skeleton
 } from 'vant'
 /* 放入数组中 */
 const plugins = [
+  Skeleton,
   Circle,
   Grid,
   GridItem,

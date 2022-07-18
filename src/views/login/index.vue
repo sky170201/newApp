@@ -5,7 +5,7 @@
       <SelectLanguage />
     </template>
   </NavBar>
-  <div class="loginBox">
+  <div class="top-100 loginBox">
     <div class="title">
       <img src="~@/assets/img/app.png">
       <p style="margin-top: 10px;" class="top-h1">AP New Media</p>
@@ -123,7 +123,7 @@ const onSubmit = async () => {
 </script>
 <style lang='less' scoped>
 .loginBox {
-  height: 100vh;
+  // height: 100vh;
   width: 100%;
   background-color: transparent;
   display: flex;

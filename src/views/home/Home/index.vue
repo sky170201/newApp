@@ -22,7 +22,7 @@
         <TaskHall />
         <div class="line"></div>
         <MemberList v-if="memberList.length" :memberList="memberList" />
-        <van-popup overlay-class="announcement" round v-model:show="show">
+        <van-popup v-if="tanchuangText" overlay-class="announcement" round v-model:show="show">
             <div class="popup">
                 <div class="title">{{ $t('homePopup.title') }}</div>
                 <div class="content">
@@ -42,6 +42,7 @@
         </van-popup>
     </div>
     <Online />
+    <Loading v-if="isLoading" />
 </template>
 
 <script setup>
@@ -54,6 +55,8 @@ import VerticalNotice from './VerticalNotice'
 import BannerMenu from './BannerMenu'
 import TaskHall from './TaskHall'
 import MemberList from './MemberList'
+import Loading from '@/components/Loading'
+
 import { mainStore } from '@/store/mainStore'
 import router from '@/router'
 import { getHomeInfo } from '@/api/home'
@@ -69,18 +72,25 @@ const noticeText = ref('')
 const memberList = ref([])
 const tanchuangText = ref('')
 
+const isLoading = ref(false)
 onMounted(async () => {
-    const { result } = await getHomeInfo()
-    console.log(result);
-    swiperImages.value = result.lunbo.map(item => item.thumb)
-    swipeList.value = result.gundong
-    noticeText.value = result.gonggao
-    memberList.value = result.bangdan
-    tanchuangText.value = result.tanchaung
-    main.setLink({
-        app: result.app,
-        telegram: result.telegram
-    })
+    try {
+        isLoading.value = true
+        const { result } = await getHomeInfo()
+        console.log(result);
+        swiperImages.value = result.lunbo.map(item => item.thumb)
+        swipeList.value = result.gundong
+        noticeText.value = result.gonggao
+        memberList.value = result.bangdan
+        tanchuangText.value = result.tanchaung
+        main.setLink({
+            app: result.app,
+            telegram: result.telegram
+        })
+        isLoading.value = false
+    } catch (error) {
+        isLoading.value = false
+    }
 })
 
 const show = computed({

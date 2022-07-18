@@ -16,23 +16,35 @@
             </li>
         </ul>
     </div>
+    <Loading v-if="loading"/>
 </template>
 
 <script setup>
 import { getVipInfo } from '@/api/home';
 import router from '@/router';
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
+import Loading from '@/components/Loading'
 
 const vipInfo = reactive({
     vip: '',
     num: '',
     list: []
 })
+const loading = ref(false)
+const _getVipInfo = async () => {
+    loading.value = true
+    try {
+        const { result } = await getVipInfo()
+        vipInfo.vip = result.vip
+        vipInfo.num = result.num
+        vipInfo.list = result.list
+        loading.value = false
+    } catch (error) {
+        loading.value = false
+    }
+}
 onMounted(async () => {
-    const { result } = await getVipInfo()
-    vipInfo.vip = result.vip
-    vipInfo.num = result.num
-    vipInfo.list = result.list
+    _getVipInfo()
 })
 
 const toVipPay = (item) => {

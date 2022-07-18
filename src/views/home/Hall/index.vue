@@ -12,6 +12,7 @@
             </van-tab>
         </van-tabs>
     </div>
+    <Loading v-if="loading"/>
 </template>
 
 <script setup>
@@ -25,6 +26,7 @@ import youtubeActive from '@/assets/img/youtube-active.png'
 import youtubeTab from '@/assets/img/youtube-tab.png'
 import { useRoute } from 'vue-router'
 import { getAllVipList } from '@/api/home'
+import Loading from '@/components/Loading'
 
 const route = useRoute()
 
@@ -43,10 +45,17 @@ const list = ref([
   // { name: 'AP5', day_limit_task_num: 15 }
 ])
 
+const loading = ref(false)
 onMounted(async () => {
-  const { result } = await getAllVipList()
-  banner.value = result.banner.map(item => item.thumb)
-  list.value = result.list
+    loading.value = true
+    try {
+        const { result } = await getAllVipList()
+        banner.value = result.banner.map(item => item.thumb)
+        list.value = result.list
+        loading.value = false
+    } catch (error) {
+        loading.value = false
+    }
 })
 </script>
 
