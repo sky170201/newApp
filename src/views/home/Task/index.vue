@@ -2,7 +2,7 @@
   <NavBar :isCusLeft="true">
     <template #title>{{ $t('task.title') }}</template>
   </NavBar>
-  <van-tabs v-model:active="initData.active" sticky @click-tab="onClickTab" @change="onClickTab" swipeable>
+  <van-tabs v-model:active="initData.active" sticky @change="onChangeTab" swipeable>
     <van-tab :title="`${$t('task.progress')}(${initData.process})`" name="progress">
       <TabContent v-if="initData.active === 'progress'" @onRefresh="onRefresh" @onLoad="onLoad"
         v-model:loading="initData.loading" v-model:finished="initData.finished" v-model:refreshing="initData.refreshing"
@@ -61,7 +61,7 @@ const setData = () => {
   initData.finished = false
   initData.refreshing = false
 }
-const onClickTab = ({ title, name }) => {
+const onChangeTab = () => {
   setData()
   _getTaskRecordList()
 }
@@ -88,11 +88,13 @@ const _getTaskRecordList = async (flag) => {
     }
     initData.refreshing = false
     initData.loading = false
-    if (initData.page === result.page) {
+    if (initData.page >= result.page) {
       initData.finished = true
     }
     isLoading.value = false
   } catch (error) {
+    initData.refreshing = false
+    initData.loading = false
     isLoading.value = false
   }
 }
@@ -102,6 +104,8 @@ onMounted(async () => {
 
 const onRefresh = () => {
   initData.page = 1
+  initData.finished = false
+  initData.loading = true
   // 重新加载数据
   _getTaskRecordList('refresh')
 }

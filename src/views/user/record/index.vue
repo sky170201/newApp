@@ -3,7 +3,7 @@
     <NavBar>
       <template #title>{{ title }}</template>
     </NavBar>
-    <van-tabs @click-tab="onClickTab" v-model:active="initData.active" swipeable>
+    <van-tabs @change="onChange" v-model:active="initData.active" swipeable>
       <van-tab name="income" :title="$t('record.income.name')">
         <List v-if="initData.active === 'income'" @onLoad="onLoad" v-model:loading="initData.loading"
           v-model:finished="initData.finished" :recordList="initData.recordList" :active="initData.active" />
@@ -44,7 +44,8 @@ const initData = reactive({
   page: 1
 })
 const title = ref(i18n.global.t('record.income.title'))
-const onClickTab = ({ name }) => {
+const onChange = (name) => {
+  console.log('name', name);
   setData()
   _getWalletDetail()
   title.value = i18n.global.t(`record.${name}.title`)
@@ -58,6 +59,7 @@ const setData = () => {
 }
 
 const _getWalletDetail = async (flag) => {
+  console.log(61, initData.loading, initData.finished);
   const { result } = await getWalletDetail({
     type: recordMap[initData.active],
     page: initData.page
@@ -72,7 +74,7 @@ const _getWalletDetail = async (flag) => {
     initData.recordList = result.list
   }
   initData.loading = false
-  if (initData.page === result.page) {
+  if (initData.page >= result.page) {
     initData.finished = true
   }
 }

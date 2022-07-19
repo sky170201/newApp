@@ -53,6 +53,7 @@
                 </template>
             </van-grid-item>
         </van-grid>
+        <div class="line"></div>
     </div>
     <Loading v-if="isLoading" />
 </template>

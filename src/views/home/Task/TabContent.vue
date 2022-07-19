@@ -64,8 +64,6 @@ const { proxy } = getCurrentInstance()
 const locale = proxy.$i18n.locale
 const active = props.active
 
-console.log(stateImgMap[active][locale]);
-
 const emits = defineEmits(['update:loading', 'update:finished', 'update:refreshing', 'onLoad', 'onRefresh'])
 
 let uploadUrl = null
@@ -98,9 +96,11 @@ const toTaskDetail = (id) => {
   })
 }
 const onLoad = () => {
+  emits('update:loading', true)
   emits('onLoad')
 }
 const onRefresh = () => {
+  emits('update:refreshing', true)
   emits('onRefresh')
 }
 const afterRead = async (file) => {

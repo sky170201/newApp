@@ -46,6 +46,7 @@ const props = defineProps({
 const emits = defineEmits(['update:loading', 'update:finished', 'onLoad', 'onRefresh'])
 
 const onLoad = () => {
+  emits('update:loading', true)
   emits('onLoad')
 }
 

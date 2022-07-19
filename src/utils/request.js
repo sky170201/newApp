@@ -5,6 +5,7 @@ import { getSessionStorage, removeSessionStorage } from "./auth";
 const service = axios.create({
   // baseURL: 'http://localhost:3000',
   baseURL: "https://api.gsmedia.cc",
+  // baseURL: "https://api.defi-usdt.world",
   timeout: 10000,
 });
 
