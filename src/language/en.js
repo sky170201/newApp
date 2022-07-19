@@ -18,6 +18,7 @@ export default {
     welcome: "Welcome to register",
     phone: "Please enter phone number",
     code: "Please enter verification code",
+    codeError: "Verification code error",
     btnCode: "Send code",
     password1: "Please enter your password",
     password2: "Please confirm your password",
@@ -210,6 +211,7 @@ export default {
     nfpp: "Please enter new fund password",
     cfp: "Please confirm the fund password",
     submitBtn: "Submit",
+    modifySuccess: 'Successfully modified'
   },
   record: {
     income: {

@@ -20,12 +20,15 @@
         </van-col>
       </van-row>
       <van-row align="center" justify="space-around">
-        <van-col span="18">
+        <van-col span="16">
           <van-field class="code" clearable v-model="verifyCode" left-icon="phone" type="text"
             :placeholder="$t('register.code')" />
         </van-col>
-        <van-col span="6">
-          <van-button size="mini" type="primary">{{ $t('register.btnCode') }}</van-button>
+        <van-col span="8">
+          <div class="login_code" @click="refreshCode">
+            <SIdentify :identifyCode="identifyCode" />
+          </div>
+          <!-- <van-button size="mini" type="primary">{{ $t('register.btnCode') }}</van-button> -->
         </van-col>
       </van-row>
       <van-field v-model="password" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
@@ -34,9 +37,9 @@
       <van-field v-model="confirmPassword" clearable :type="isPassword ? 'password' : 'text'" left-icon="lock"
         :right-icon="isPassword ? 'closed-eye' : 'eye-o'" @click-right-icon="clickRightIcon"
         :placeholder="$t('register.password2')" />
-      <van-field v-model="inventCode" clearable left-icon="lock" :placeholder="$t('register.inventCode')" />
+      <van-field v-model="inventCode" clearable left-icon="point-gift-o" :placeholder="$t('register.inventCode')" />
       <div style="margin: 16px;">
-        <van-button :loading="isLoading" block type="primary" native-type="submit">
+        <van-button :loading="isLoading" :loading-text="$t('register.submit')" block type="primary" native-type="submit">
           {{ $t('register.submit') }}
         </van-button>
       </div>
@@ -57,10 +60,11 @@
 </template>
 <script setup>
 import router from '@/router'
-import { ref, onMounted } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { Toast } from 'vant'
 
 import NavBar from '@/components/NavBar'
+import SIdentify from '@/components/Sidentify'
 import SelectLanguage from '@/views/common/SelectLanguage'
 import Online from '@/views/common/Online'
 
@@ -68,7 +72,6 @@ import { mainStore } from '@/store/mainStore.js'
 import i18n from '@/language/i18n'
 import { getAreasCode } from '@/api/getStaticDataApi';
 import { register } from '@/api/login';
-const store = mainStore()
 
 const isLoading = ref(false)
 const areaCode = ref('')
@@ -84,7 +87,30 @@ const columns = ref([])
 const customFieldName = {
   text: 'code',
 }
+
+// 图形验证码
+let identifyCodes = "1234567890"
+let identifyCode = ref('3212')
+ 
+const randomNum = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min)
+}
+ 
+const makeCode = (o, l) => {
+    for (let i = 0; i < l; i++) {
+        identifyCode.value += o[
+            randomNum(0, o.length)
+        ];
+    }
+}
+ 
+const refreshCode = () => {
+    identifyCode.value = "";
+    makeCode(identifyCodes, 4);
+}
 onMounted(async () => {
+  identifyCode.value = "";
+  makeCode(identifyCodes, 4);
   const res = await getAreasCode()
   columns.value = res.result.list
 })
@@ -110,6 +136,8 @@ const onSubmit = async () => {
     Toast(i18n.global.t('register.phone'));
   } else if (verifyCode.value === '') {
     Toast(i18n.global.t('register.code'));
+  } else if (verifyCode.value !== identifyCode.value) {
+    Toast(i18n.global.t('register.codeError'));
   } else if (password.value === '') {
     Toast(i18n.global.t('register.password1'));
   } else if (confirmPassword.value === '') {
@@ -119,15 +147,18 @@ const onSubmit = async () => {
   } else if (inventCode.value === '') {
     Toast(i18n.global.t('register.inventCode'));
   } else {
-    // await store.register({
-    // password: 123
-    // ltc: 1
-    // phone: 123
-    // code: 1935
-    // })
+    const { code, message } = await register({
+      password: password.value,
+      ltc: areaCode.value,
+      phone: phone.value,
+      code: verifyCode.value,
+      invite: phone.value
+    })
+    if (code != 500) {
+      router.push('/')
+    }
   }
   isLoading.value = false
-  // router.push('/')
 }
 </script>
 <style lang='less' scoped>

@@ -82,13 +82,15 @@ import usdtImg from '@/assets/img/info_04.png'
 import lPImg from '@/assets/img/info_05.png'
 import apImg from '@/assets/img/info_06.png'
 import { uploadFile } from '@/api/home';
-import { updateAvatar } from '@/api/myApi';
+import { setPassword, setPaypass, updateAvatar } from '@/api/myApi';
 import { mainStore } from '@/store/mainStore';
+import { Toast } from 'vant';
 
 // import
 const main = mainStore()
 const avatar = ref(main.user.avatar)
-const phone = ref('123')
+const phone = ref('')
+const actionType = ref('')
 const afterRead = async (file) => {
     console.log(123);
     // 此时可以自行将文件上传至服务器
@@ -126,14 +128,53 @@ const strategy = {
         cellp2: i18n.global.t('userInfo.nfpp'),
         cell3: i18n.global.t('userInfo.cp'),
         cell3p: i18n.global.t('userInfo.cfp'),
-    }
+    },
+    modifySuccess: i18n.global.t('userInfo.modifySuccess')
 }
 
 const clickInput = (type) => {
+    actionType.value = type
     modifyCell.value = strategy[type]
     isShowSetPassword.value = true
 }
+const onSubmit = async () => {
+  if (originPassword.value === '') {
+    Toast(strategy[actionType.value].cell1p);
+  } else if (newPassword.value === '') {
+    Toast(strategy[actionType.value].cellp2);
+  } else if (confirmPassword.value === '') {
+    Toast(strategy[actionType.value].cell3p);
+  } else if (newPassword.value !== confirmPassword.value) {
+    Toast(i18n.global.t('register.validTwo'));
+  } else {
+    let resCode, resMsg
+    if (actionType.value === 'login') {
+        const { code, message } = await setPassword({
+            password: newPassword.value,
+        })
+        resCode = code
+        resMsg = message
+    } else {
+        const { code, message } = await setPaypass({
+            password: newPassword.value,
+            opass: originPassword.value
+        })
+        resCode = code
+        resMsg = message
+    }
+    if (resCode != 500) {
+        Toast(strategy.modifySuccess)
+        isShowSetPassword.value = false
+        reset()
+    }
+  }
+}
 
+const reset = () => {
+    originPassword.value = ''
+    newPassword.value = ''
+    confirmPassword.value = ''
+}
 </script>
 
 <style scoped lang="less">

@@ -18,6 +18,7 @@ export default {
     welcome: "欢迎注册",
     phone: "请输入手机号",
     code: "请输入验证码",
+    codeError: "验证码错误",
     btnCode: "发送验证码",
     password1: "请输入登录密码",
     password2: "请确认你的密码",
@@ -210,6 +211,7 @@ export default {
     nfpp: "请输入新资金密码",
     cfp: "请确认资金密码",
     submitBtn: "提交",
+    modifySuccess: '修改成功'
   },
   record: {
     income: {

@@ -61,6 +61,26 @@ export function setMyusdt () {
   });
 }
 
+/* 修改登录密码 */
+export function setPassword (data) {
+  // password: 123456
+  return request({
+    method: "post",
+    url: "/api/user/password",
+    data
+  });
+}
+
+/* 修改资金密码 */
+export function setPaypass (data) {
+  // password: 123456; opass: 123
+  return request({
+    method: "post",
+    url: "/api/user/paypass",
+    data
+  });
+}
+
 /* 查询钱包明细 */
 export function getWalletDetail (params) {
   // page=1&type=3
