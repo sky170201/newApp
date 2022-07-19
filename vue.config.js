@@ -2,6 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   lintOnSave: false,
   transpileDependencies: true,
+  productionSourceMap: false,
   css: {
     // 构建时跟踪css对应的文件及样式所在位置
     sourceMap: true,

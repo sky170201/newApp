@@ -4,8 +4,9 @@ import { Toast } from "vant";
 import { getSessionStorage, removeSessionStorage } from "./auth";
 const service = axios.create({
   // baseURL: 'http://localhost:3000',
-  baseURL: "https://api.gsmedia.cc",
+  // baseURL: "https://api.gsmedia.cc",
   // baseURL: "https://api.defi-usdt.world",
+  baseURL: process.env.VUE_APP_BASE_API,
   timeout: 10000,
 });
 
